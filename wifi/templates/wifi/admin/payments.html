@@ -1,0 +1,130 @@
+{% extends 'wifi/base.html' %}
+{% block title %}Payments – MAC Technologies{% endblock %}
+
+{% block content %}
+<h2 class="fw-bold" style="color: var(--brand-blue);"><i class="bi bi-credit-card me-2"></i>Payment History</h2>
+
+{% include 'wifi/admin/_nav.html' %}
+
+<!-- Filters -->
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-3 col-sm-6">
+        <label class="form-label fw-semibold small text-muted"><i class="bi bi-funnel me-1"></i>Status</label>
+        <select name="status" class="form-select form-select-lg border-2 shadow-sm" style="border-color: var(--border-color); border-radius: 12px;">
+            <option value="">All Statuses</option>
+            <option value="pending" {% if status_filter == 'pending' %}selected{% endif %}>⏳ Pending</option>
+            <option value="processing" {% if status_filter == 'processing' %}selected{% endif %}>🔄 Processing</option>
+            <option value="successful" {% if status_filter == 'successful' %}selected{% endif %}>✅ Successful</option>
+            <option value="failed" {% if status_filter == 'failed' %}selected{% endif %}>❌ Failed</option>
+        </select>
+    </div>
+    <div class="col-md-2 col-sm-6">
+        <label class="form-label fw-semibold small text-muted"><i class="bi bi-phone me-1"></i>Provider</label>
+        <select name="provider" class="form-select form-select-lg border-2 shadow-sm" style="border-color: var(--border-color); border-radius: 12px;">
+            <option value="">All Providers</option>
+            <option value="mtn" {% if provider_filter == 'mtn' %}selected{% endif %}>📱 MTN</option>
+            <option value="airtel" {% if provider_filter == 'airtel' %}selected{% endif %}>📱 Airtel</option>
+        </select>
+    </div>
+    <div class="col-md-2 col-sm-6">
+        <label class="form-label fw-semibold small text-muted"><i class="bi bi-calendar me-1"></i>From</label>
+        <input type="text" name="date_from" class="form-control form-control-lg border-2 shadow-sm datepicker" 
+               style="border-color: var(--border-color); border-radius: 12px;" 
+               placeholder="Select date" value="{{ date_from|default:'' }}">
+    </div>
+    <div class="col-md-2 col-sm-6">
+        <label class="form-label fw-semibold small text-muted"><i class="bi bi-calendar me-1"></i>To</label>
+        <input type="text" name="date_to" class="form-control form-control-lg border-2 shadow-sm datepicker" 
+               style="border-color: var(--border-color); border-radius: 12px;" 
+               placeholder="Select date" value="{{ date_to|default:'' }}">
+    </div>
+    <div class="col-md-3 col-sm-12 d-flex align-items-end gap-2 flex-wrap">
+        <button type="submit" class="btn btn-primary btn-lg px-4 rounded-pill shadow-sm">
+            <i class="bi bi-search me-2"></i>Filter
+        </button>
+        <a href="{% url 'wifi:admin_payments' %}" class="btn btn-outline-secondary btn-lg px-4 rounded-pill">
+            <i class="bi bi-arrow-counterclockwise me-2"></i>Clear
+        </a>
+        <a href="{% url 'wifi:admin_payments_export' %}" class="btn btn-success btn-lg px-4 rounded-pill shadow-sm">
+            <i class="bi bi-download me-2"></i>Export
+        </a>
+    </div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Reference</th>
+                <th>Customer</th>
+                <th>Package</th>
+                <th>Amount</th>
+                <th>Provider</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in payments %}
+            <tr>
+                <td><code>{{ payment.reference|truncatechars:8 }}</code></td>
+                <td>{{ payment.customer.phone_number }}</td>
+                <td>{{ payment.package.name }}</td>
+                <td><strong>UGX {{ payment.amount }}</strong></td>
+                <td>{{ payment.get_provider_display }}</td>
+                <td>
+                    <span class="badge {% if payment.status == 'successful' %}bg-success{% elif payment.status == 'failed' %}bg-danger{% elif payment.status == 'pending' or payment.status == 'processing' %}bg-warning{% else %}bg-secondary{% endif %} px-3 py-2 rounded-pill">
+                        {{ payment.status|title }}
+                    </span>
+                </td>
+                <td>{{ payment.created_at|date:"d M Y H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7" class="text-center py-4 text-muted">No payments found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .datepicker {
+        background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2364748b' class='bi bi-calendar' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2z'/%3E%3C/svg%3E") no-repeat right 1rem center;
+        background-size: 1.2rem;
+        cursor: pointer;
+        padding-right: 3rem !important;
+    }
+    .datepicker:focus {
+        border-color: var(--brand-blue);
+        box-shadow: 0 0 0 4px rgba(22, 50, 175, 0.12);
+    }
+    /* Flatpickr custom theme override (airbnb) */
+    .flatpickr-calendar {
+        border-radius: 16px !important;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.15) !important;
+    }
+    .flatpickr-day.selected {
+        background: var(--brand-blue) !important;
+        border-color: var(--brand-blue) !important;
+    }
+    .flatpickr-day.selected:hover {
+        background: var(--brand-blue-light) !important;
+        border-color: var(--brand-blue-light) !important;
+    }
+    .flatpickr-day.today {
+        border-color: var(--brand-blue) !important;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Flatpickr on all .datepicker inputs
+        flatpickr(".datepicker", {
+            dateFormat: "Y-m-d",
+            allowInput: true,
+            altInput: true,
+            altFormat: "F j, Y",
+            disableMobile: true,  // Force desktop picker on mobile for consistency
+        });
+    });
+</script>
+{% endblock %}

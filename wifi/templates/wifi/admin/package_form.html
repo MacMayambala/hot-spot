@@ -1,0 +1,231 @@
+{% extends 'wifi/base.html' %}
+{% block title %}{{ title }} – MAC Technologies{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="wifi-card">
+            <!-- Card Header -->
+            <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
+                <div class="bg-primary bg-opacity-10 p-3 rounded-circle">
+                    <i class="bi bi-box fs-3 text-primary"></i>
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-0" style="color: var(--brand-blue);">{{ title }}</h3>
+                    <small class="text-muted">Fill in the package details below</small>
+                </div>
+            </div>
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <!-- Name & Description -->
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="{{ form.name.id_for_label }}" class="form-label fw-semibold">
+                                Package Name <span class="text-danger">*</span>
+                            </label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <div class="invalid-feedback d-block">{{ form.name.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="{{ form.description.id_for_label }}" class="form-label fw-semibold">Description</label>
+                            {{ form.description }}
+                            {% if form.description.errors %}
+                                <div class="invalid-feedback d-block">{{ form.description.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price -->
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="{{ form.price.id_for_label }}" class="form-label fw-semibold">
+                                Price (UGX) <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-2" style="border-color: var(--border-color);">
+                                    <i class="bi bi-currency-dollar"></i>
+                                </span>
+                                {{ form.price }}
+                            </div>
+                            {% if form.price.errors %}
+                                <div class="invalid-feedback d-block">{{ form.price.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Duration & Unit -->
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="{{ form.duration.id_for_label }}" class="form-label fw-semibold">
+                                Duration <span class="text-danger">*</span>
+                            </label>
+                            {{ form.duration }}
+                            {% if form.duration.errors %}
+                                <div class="invalid-feedback d-block">{{ form.duration.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="{{ form.duration_unit.id_for_label }}" class="form-label fw-semibold">Unit</label>
+                            {{ form.duration_unit }}
+                            {% if form.duration_unit.errors %}
+                                <div class="invalid-feedback d-block">{{ form.duration_unit.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Limit & Speed Limit -->
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="{{ form.data_limit.id_for_label }}" class="form-label fw-semibold">Data Limit (MB)</label>
+                            {{ form.data_limit }}
+                            <div class="form-text">Enter <strong>0</strong> for unlimited data.</div>
+                            {% if form.data_limit.errors %}
+                                <div class="invalid-feedback d-block">{{ form.data_limit.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="{{ form.speed_limit.id_for_label }}" class="form-label fw-semibold">Speed Limit (kbps)</label>
+                            {{ form.speed_limit }}
+                            <div class="form-text">Enter <strong>0</strong> for no speed limit.</div>
+                            {% if form.speed_limit.errors %}
+                                <div class="invalid-feedback d-block">{{ form.speed_limit.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checkboxes: Unlimited & Active -->
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                {{ form.is_unlimited }}
+                                <label for="{{ form.is_unlimited.id_for_label }}" class="form-check-label fw-semibold">
+                                    Unlimited Data
+                                </label>
+                            </div>
+                            <small class="text-muted d-block">If checked, data limit is ignored.</small>
+                            {% if form.is_unlimited.errors %}
+                                <div class="invalid-feedback d-block">{{ form.is_unlimited.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                {{ form.is_active }}
+                                <label for="{{ form.is_active.id_for_label }}" class="form-check-label fw-semibold">
+                                    Active
+                                </label>
+                            </div>
+                            <small class="text-muted d-block">Inactive packages won't appear to customers.</small>
+                            {% if form.is_active.errors %}
+                                <div class="invalid-feedback d-block">{{ form.is_active.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex gap-3 mt-4 pt-3 border-top">
+                    <button type="submit" class="btn btn-primary px-5 py-2">
+                        <i class="bi bi-check2-circle me-2"></i> Save Package
+                    </button>
+                    <a href="{% url 'wifi:admin_packages' %}" class="btn btn-outline-secondary px-4 py-2">
+                        <i class="bi bi-x-circle me-2"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Style for checkboxes (switch) */
+    .form-switch .form-check-input {
+        width: 3em;
+        height: 1.5em;
+        cursor: pointer;
+        border-color: var(--border-color);
+    }
+    .form-switch .form-check-input:checked {
+        background-color: var(--brand-blue);
+        border-color: var(--brand-blue);
+    }
+    .form-switch .form-check-input:focus {
+        box-shadow: 0 0 0 3px rgba(22, 50, 175, 0.15);
+    }
+    .form-switch .form-check-label {
+        margin-left: 0.5rem;
+        cursor: pointer;
+    }
+    /* Input group styling */
+    .input-group-text {
+        border-radius: 12px 0 0 12px;
+        border-width: 2px;
+    }
+    .input-group .form-control {
+        border-radius: 0 12px 12px 0;
+        border-width: 2px;
+    }
+    .input-group .form-control:focus {
+        border-color: var(--brand-blue);
+        box-shadow: 0 0 0 4px rgba(22, 50, 175, 0.08);
+    }
+    /* General form control */
+    .form-control, .form-select {
+        border-width: 2px;
+        border-color: var(--border-color);
+        border-radius: 12px;
+        padding: 0.6rem 1rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: var(--brand-blue);
+        box-shadow: 0 0 0 4px rgba(22, 50, 175, 0.08);
+    }
+    .invalid-feedback {
+        font-size: 0.85rem;
+        margin-top: 0.25rem;
+    }
+    .border-top {
+        border-color: var(--border-color) !important;
+    }
+    .btn {
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.25s ease;
+    }
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(22, 50, 175, 0.25);
+    }
+    .btn-outline-secondary:hover {
+        transform: translateY(-2px);
+    }
+    /* Make checkboxes appear as switches on mobile too */
+    @media (max-width: 576px) {
+        .form-switch .form-check-input {
+            width: 2.5em;
+            height: 1.2em;
+        }
+    }
+</style>
+{% endblock %}

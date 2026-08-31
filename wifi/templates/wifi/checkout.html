@@ -1,0 +1,127 @@
+{% extends 'wifi/base.html' %}
+{% load static %}
+{% block title %}Checkout – MAC Technologies{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 col-12">
+        <div class="wifi-card animate-fade">
+            <h3 class="fw-bold" style="color: var(--brand-blue);"><i class="bi bi-credit-card me-2"></i>Complete Payment</h3>
+            <div class="mt-4 p-3 bg-light rounded-4 d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="text-muted small">Package</span>
+                    <div class="fw-bold">{{ package.name }}</div>
+                </div>
+                <div class="text-end">
+                    <span class="text-muted small">Amount</span>
+                    <div class="fs-5 fw-bold" style="color: var(--brand-blue);">UGX {{ package.price }}</div>
+                </div>
+            </div>
+
+            <form method="post" class="mt-4">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label fw-semibold"><i class="bi bi-phone me-1"></i> Your Phone Number</label>
+                    {{ form.phone_number }}
+                    <div class="form-text">Enter your MTN or Airtel number (e.g., 0700000000).</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold"><i class="bi bi-person me-1"></i> Your Name (optional)</label>
+                    {{ form.name }}
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold"><i class="bi bi-wallet2 me-1"></i> Select Payment Method</label>
+                    <div class="row g-3">
+                        <!-- MTN -->
+                        <div class="col-6">
+                            <div class="provider-card border rounded-4 p-3 text-center h-100 d-flex flex-column align-items-center justify-content-center" 
+                                 data-provider="mtn" onclick="selectProvider('mtn')">
+                                <input type="radio" name="provider" value="mtn" id="mtn" class="d-none" {% if not request.POST.provider or request.POST.provider == 'mtn' %}checked{% endif %}>
+                                <img src="{% static 'wifi/images/mtn.png' %}" alt="MTN" class="provider-logo mb-2" style="height: 45px; object-fit: contain;">
+                                <label for="mtn" class="fw-semibold" style="cursor: pointer;">MTN Mobile Money</label>
+                            </div>
+                        </div>
+                        <!-- Airtel -->
+                        <div class="col-6">
+                            <div class="provider-card border rounded-4 p-3 text-center h-100 d-flex flex-column align-items-center justify-content-center" 
+                                 data-provider="airtel" onclick="selectProvider('airtel')">
+                                <input type="radio" name="provider" value="airtel" id="airtel" class="d-none" {% if request.POST.provider == 'airtel' %}checked{% endif %}>
+                                <img src="{% static 'wifi/images/airtel.png' %}" alt="Airtel" class="provider-logo mb-2" style="height: 45px; object-fit: contain;">
+                                <label for="airtel" class="fw-semibold" style="cursor: pointer;">Airtel Money</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-3">
+                    <i class="bi bi-lock me-2"></i> Pay Now
+                </button>
+            </form>
+
+            <div class="mt-3 text-center small text-muted">
+                <i class="bi bi-shield-check me-1"></i> You'll receive a prompt on your phone to confirm the payment.
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .animate-fade {
+        animation: fadeUp 0.6s ease forwards;
+        opacity: 0;
+    }
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .provider-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border-color: #dee2e6 !important;
+        background: white;
+        border-width: 2px !important;
+    }
+    .provider-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    .provider-card.selected {
+        border-color: #28a745 !important;
+        background: #f0faf0;
+        box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.2);
+    }
+    .provider-card.selected .provider-logo {
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+    .provider-card input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+    }
+</style>
+
+{% block extra_js %}
+<script>
+    function selectProvider(provider) {
+        document.querySelectorAll('.provider-card').forEach(card => card.classList.remove('selected'));
+        const card = document.querySelector(`.provider-card[data-provider="${provider}"]`);
+        if (card) card.classList.add('selected');
+        const radio = document.getElementById(provider);
+        if (radio) radio.checked = true;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkedRadio = document.querySelector('input[name="provider"]:checked');
+        if (checkedRadio) {
+            const provider = checkedRadio.value;
+            const card = document.querySelector(`.provider-card[data-provider="${provider}"]`);
+            if (card) card.classList.add('selected');
+        } else {
+            const defaultCard = document.querySelector('.provider-card[data-provider="mtn"]');
+            if (defaultCard) defaultCard.classList.add('selected');
+        }
+    });
+</script>
+{% endblock %}
+{% endblock %}

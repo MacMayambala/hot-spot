@@ -1,0 +1,996 @@
+Watching for file changes with StatReloader
+Not Found: /
+Not Found: /favicon.ico
+/home/mac/whoweare/wifi/wifi_hotspot/wifi_hotspot/urls.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /wifi/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: wifi_wifidevice
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 54, in portal
+    device = get_or_create_device(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 36, in get_or_create_device
+    device, created = WifiDevice.objects.get_or_create(
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mac_address=mac,
+        ^^^^^^^^^^^^^^^^
+        defaults={'ip_address': ip, 'user_agent': user_agent}
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 1031, in get_or_create
+    return self.get(**kwargs), False
+           ~~~~~~~~^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 679, in get
+    num = len(clone)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 416, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 2239, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 98, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: wifi_wifidevice
+Watching for file changes with StatReloader
+Internal Server Error: /wifi/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 1031, in get_or_create
+    return self.get(**kwargs), False
+           ~~~~~~~~^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 683, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+wifi.models.WifiDevice.DoesNotExist: WifiDevice matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: NOT NULL constraint failed: wifi_wifidevice.customer_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 54, in portal
+    device = get_or_create_device(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 36, in get_or_create_device
+    device, created = WifiDevice.objects.get_or_create(
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mac_address=mac,
+        ^^^^^^^^^^^^^^^^
+        defaults={'ip_address': ip, 'user_agent': user_agent}
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 1038, in get_or_create
+    return self.create(**params), True
+           ~~~~~~~~~~~^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 713, in create
+    obj.save(force_insert=True, using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/base.py", line 904, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/base.py", line 996, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/base.py", line 1201, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, insert_fields, returning_fields, raw
+    )
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/base.py", line 1253, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 2118, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/sql/compiler.py", line 1935, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: NOT NULL constraint failed: wifi_wifidevice.customer_id
+Internal Server Error: /wifi/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 1031, in get_or_create
+    return self.get(**kwargs), False
+           ~~~~~~~~^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 683, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+wifi.models.WifiDevice.DoesNotExist: WifiDevice matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: NOT NULL constraint failed: wifi_wifidevice.customer_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 54, in portal
+    device = get_or_create_device(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 36, in get_or_create_device
+    device, created = WifiDevice.objects.get_or_create(
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mac_address=mac,
+        ^^^^^^^^^^^^^^^^
+        defaults={'ip_address': ip, 'user_agent': user_agent}
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 1038, in get_or_create
+    return self.create(**params), True
+           ~~~~~~~~~~~^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 713, in create
+    obj.save(force_insert=True, using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/base.py", line 904, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/base.py", line 996, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/base.py", line 1201, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, insert_fields, returning_fields, raw
+    )
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/base.py", line 1253, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 2118, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/sql/compiler.py", line 1935, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: NOT NULL constraint failed: wifi_wifidevice.customer_id
+Internal Server Error: /wifi/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 1031, in get_or_create
+    return self.get(**kwargs), False
+           ~~~~~~~~^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 683, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+wifi.models.WifiDevice.DoesNotExist: WifiDevice matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: NOT NULL constraint failed: wifi_wifidevice.customer_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 54, in portal
+    device = get_or_create_device(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 36, in get_or_create_device
+    device, created = WifiDevice.objects.get_or_create(
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mac_address=mac,
+        ^^^^^^^^^^^^^^^^
+        defaults={'ip_address': ip, 'user_agent': user_agent}
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 1038, in get_or_create
+    return self.create(**params), True
+           ~~~~~~~~~~~^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 713, in create
+    obj.save(force_insert=True, using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/base.py", line 904, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/base.py", line 996, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/base.py", line 1201, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, insert_fields, returning_fields, raw
+    )
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/base.py", line 1253, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 2118, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/sql/compiler.py", line 1935, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: NOT NULL constraint failed: wifi_wifidevice.customer_id
+Internal Server Error: /wifi/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 1031, in get_or_create
+    return self.get(**kwargs), False
+           ~~~~~~~~^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 683, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+wifi.models.WifiDevice.DoesNotExist: WifiDevice matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: NOT NULL constraint failed: wifi_wifidevice.customer_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 54, in portal
+    device = get_or_create_device(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 36, in get_or_create_device
+    device, created = WifiDevice.objects.get_or_create(
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        mac_address=mac,
+        ^^^^^^^^^^^^^^^^
+        defaults={'ip_address': ip, 'user_agent': user_agent}
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 1038, in get_or_create
+    return self.create(**params), True
+           ~~~~~~~~~~~^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 713, in create
+    obj.save(force_insert=True, using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/base.py", line 904, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/base.py", line 996, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/base.py", line 1201, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, insert_fields, returning_fields, raw
+    )
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/base.py", line 1253, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/query.py", line 2118, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/models/sql/compiler.py", line 1935, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: NOT NULL constraint failed: wifi_wifidevice.customer_id
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/models.py changed, reloading.
+Watching for file changes with StatReloader
+Not Found: /wifi/admin
+Not Found: /favicon.ico
+Marz API error: 401 Client Error: Unauthorized for url: https://wallet.wearemarz.com/api/v1/collect-money
+Payment initiation failed: 401 Client Error: Unauthorized for url: https://wallet.wearemarz.com/api/v1/collect-money
+Marz API error: 401 Client Error: Unauthorized for url: https://wallet.wearemarz.com/api/v1/collect-money
+Payment initiation failed: 401 Client Error: Unauthorized for url: https://wallet.wearemarz.com/api/v1/collect-money
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/forms.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /wifi/checkout/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 594, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 112, in checkout
+    return render(request, 'wifi/checkout.html', {'package': package, 'form': form})
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 602, in parse
+    raise self.error(token, e)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 600, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 602, in parse
+    raise self.error(token, e)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 600, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 235, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 596, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 651, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: /home/mac/whoweare/wifi/wifi_hotspot/wifi/templates/wifi/checkout.html, Invalid block tag on line 40: 'static', expected 'endblock'. Did you forget to register or load this tag?
+Internal Server Error: /wifi/checkout/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 594, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 112, in checkout
+    return render(request, 'wifi/checkout.html', {'package': package, 'form': form})
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 602, in parse
+    raise self.error(token, e)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 600, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 602, in parse
+    raise self.error(token, e)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 600, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 235, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 596, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 651, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: /home/mac/whoweare/wifi/wifi_hotspot/wifi/templates/wifi/checkout.html, Invalid block tag on line 40: 'static', expected 'endblock'. Did you forget to register or load this tag?
+Internal Server Error: /wifi/checkout/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 594, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 112, in checkout
+    return render(request, 'wifi/checkout.html', {'package': package, 'form': form})
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 602, in parse
+    raise self.error(token, e)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 600, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 602, in parse
+    raise self.error(token, e)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 600, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 235, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 596, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 651, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: /home/mac/whoweare/wifi/wifi_hotspot/wifi/templates/wifi/checkout.html, Invalid block tag on line 40: 'static', expected 'endblock'. Did you forget to register or load this tag?
+Marz API error: 401 Client Error: Unauthorized for url: https://wallet.wearemarz.com/api/v1/collect-money
+Payment initiation failed: 401 Client Error: Unauthorized for url: https://wallet.wearemarz.com/api/v1/collect-money
+Internal Server Error: /wifi/packages/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 73, in packages
+    return render(request, 'wifi/packages.html', {'packages': packages, 'form': form})
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 602, in parse
+    raise self.error(token, e)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 600, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/defaulttags.py", line 994, in do_if
+    nodelist = parser.parse(("elif", "else", "endif"))
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 602, in parse
+    raise self.error(token, e)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 600, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/defaulttags.py", line 894, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 556, in parse
+    raise self.error(token, e)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 554, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 693, in compile_filter
+    return FilterExpression(token, self)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 793, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: /home/mac/whoweare/wifi/wifi_hotspot/wifi/templates/wifi/base.html, Could not parse the remainder: ' == 'success' and 'check-circle-fill' or message.tags == 'error' and 'x-circle-fill' or 'info-circle'' from 'message.tags == 'success' and 'check-circle-fill' or message.tags == 'error' and 'x-circle-fill' or 'info-circle''
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/forms.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /wifi/admin/customers/1/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 296, in admin_customer_detail
+    return render(request, 'wifi/admin/customer_detail.html', {
+        'customer': customer,
+    ...<2 lines>...
+        'devices': devices,
+    })
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 602, in parse
+    raise self.error(token, e)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 600, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 602, in parse
+    raise self.error(token, e)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 600, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 602, in parse
+    raise self.error(token, e)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 600, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 229, in do_block
+    raise TemplateSyntaxError(
+        "'%s' tag with name '%s' appears more than once" % (bits[0], block_name)
+    )
+django.template.exceptions.TemplateSyntaxError: Template: /home/mac/whoweare/wifi/wifi_hotspot/wifi/templates/wifi/admin/customer_detail.html, 'block' tag with name 'title' appears more than once
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/forms.py changed, reloading.
+Watching for file changes with StatReloader
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /wifi/admin/customers/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 306, in admin_customers
+    return render(request, 'wifi/admin/customers.html', {
+        'customers': page_obj,
+    ...<6 lines>...
+        'page_obj': page_obj,
+    })
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 602, in parse
+    raise self.error(token, e)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 600, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 602, in parse
+    raise self.error(token, e)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 600, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 235, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 602, in parse
+    raise self.error(token, e)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 600, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/defaulttags.py", line 894, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 602, in parse
+    raise self.error(token, e)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 600, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/defaulttags.py", line 1676, in do_with
+    extra_context = token_kwargs(remaining_bits, parser, support_legacy=True)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1218, in token_kwargs
+    kwargs[key] = parser.compile_filter(value)
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 693, in compile_filter
+    return FilterExpression(token, self)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 793, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: /home/mac/whoweare/wifi/wifi_hotspot/wifi/templates/wifi/admin/customers.html, Could not parse the remainder: '='active'' from 'customer.subscriptions.filter.status='active''
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/mac/whoweare/wifi/wifi_hotspot/wifi_hotspot/settings.py changed, reloading.
+Watching for file changes with StatReloader
+Payment initiation failed: 'Settings' object has no attribute 'MARZ_API_URL'
+/home/mac/whoweare/wifi/wifi_hotspot/wifi_hotspot/settings.py changed, reloading.
+Watching for file changes with StatReloader
+Payment initiation failed: No authentication credentials found (MARZPAY_API_KEY+SECRET or MARZ_API_USERNAME+PASSWORD).
+/home/mac/whoweare/wifi/wifi_hotspot/wifi_hotspot/settings.py changed, reloading.
+Watching for file changes with StatReloader
+Marz API error: 401 Client Error: Unauthorized for url: https://wallet.wearemarz.com/api/v1/collect-money
+Payment initiation failed: 401 Client Error: Unauthorized for url: https://wallet.wearemarz.com/api/v1/collect-money
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/services/marz.py changed, reloading.
+Watching for file changes with StatReloader
+MarzPay collection request: reference=033f045c-e8cc-4e94-94f8-12bdda59f791, phone=+256776203790, amount=700.00
+Payment initiation failed: Object of type Decimal is not JSON serializable
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/services/payments.py changed, reloading.
+Watching for file changes with StatReloader
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py changed, reloading.
+Watching for file changes with StatReloader
+MarzPay collection request: reference=477532f2-ab47-4151-b8b7-bd413b3238a7, phone=+256776203790, amount=700
+MarzPay collection initiated successfully: 477532f2-ab47-4151-b8b7-bd413b3238a7
+Payment initiated: 477532f2-ab47-4151-b8b7-bd413b3238a7
+MarzPay collection request: reference=90efea36-91c1-4862-86f5-33d760ec9d88, phone=+256776203790, amount=700
+MarzPay collection initiated successfully: 90efea36-91c1-4862-86f5-33d760ec9d88
+Payment initiated: 90efea36-91c1-4862-86f5-33d760ec9d88
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py changed, reloading.
+Watching for file changes with StatReloader

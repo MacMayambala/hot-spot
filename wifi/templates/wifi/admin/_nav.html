@@ -1,0 +1,29 @@
+<nav class="mb-4">
+    <div class="d-flex flex-wrap gap-2">
+        <a href="{% url 'wifi:admin_dashboard' %}" class="btn btn-outline-primary btn-sm {% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}">
+            <i class="bi bi-speedometer2 me-1"></i> Dashboard
+        </a>
+        <a href="{% url 'wifi:admin_packages' %}" class="btn btn-outline-primary btn-sm {% if 'packages' in request.path %}active{% endif %}">
+            <i class="bi bi-boxes me-1"></i> Packages
+        </a>
+        <a href="{% url 'wifi:admin_customers' %}" class="btn btn-outline-primary btn-sm {% if 'customers' in request.path %}active{% endif %}">
+            <i class="bi bi-people me-1"></i> Customers
+        </a>
+        <a href="{% url 'wifi:admin_payments' %}" class="btn btn-outline-primary btn-sm {% if 'payments' in request.path %}active{% endif %}">
+            <i class="bi bi-credit-card me-1"></i> Payments
+        </a>
+        {% if request.resolver_match.url_name == 'admin_payments' %}
+        <a href="{% url 'wifi:admin_payments_export' %}" class="btn btn-success btn-sm">
+            <i class="bi bi-download me-1"></i> Export CSV
+        </a>
+        {% endif %}
+    </div>
+</nav>
+
+<style>
+    .btn-outline-primary.active {
+        background: var(--brand-blue);
+        color: white;
+        border-color: var(--brand-blue);
+    }
+</style>

@@ -1,0 +1,51 @@
+{% extends 'wifi/base.html' %}
+{% load static %}
+{% block title %}Welcome to MAC Technologies WiFi{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 65vh;">
+    <div class="col-lg-7 col-md-9 col-12 text-center">
+        <div class="wifi-card p-5 animate-fade">
+            <div class="mb-4">
+                <i class="bi bi-wifi display-1" style="color: var(--brand-blue);"></i>
+            </div>
+            <h1 class="display-4 fw-bold" style="color: var(--brand-blue);">Welcome to MAC Technologies</h1>
+            <p class="lead text-muted">Fast • Reliable • Affordable Internet</p>
+            <p class="text-secondary mb-4">Get connected in seconds. Choose a package that fits your needs and pay securely with mobile money.</p>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <a href="{% url 'wifi:packages' %}" class="btn btn-primary btn-lg px-5 py-3">
+                    <i class="bi bi-arrow-right-circle me-2"></i> Get Started
+                </a>
+                <a href="{% url 'wifi:voucher_login' %}" class="btn btn-outline-primary btn-lg px-5 py-3">
+                    <i class="bi bi-ticket me-2"></i> Have a voucher? Connect
+                </a>
+            </div>
+            <div class="mt-3 small text-muted">
+                <i class="bi bi-shield-check me-1"></i> Secure payments via MTN &amp; Airtel Money
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .animate-fade {
+        animation: fadeUp 0.7s ease forwards;
+        opacity: 0;
+    }
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .btn-outline-primary {
+        border-width: 2px;
+        font-weight: 600;
+        border-radius: 50px;
+    }
+    .btn-outline-primary:hover {
+        background: var(--brand-blue);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(22, 50, 175, 0.3);
+    }
+</style>
+{% endblock %}

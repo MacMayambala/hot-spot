@@ -1,0 +1,223 @@
+{% extends 'wifi/base.html' %}
+{% block title %}Customer Detail – MAC Technologies{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold" style="color: var(--brand-blue);">
+            <i class="bi bi-person-badge me-2"></i>{{ customer.phone_number }}
+        </h2>
+        <p class="text-muted mb-0">
+            <i class="bi bi-person me-1"></i> {{ customer.name|default:"No name provided" }}
+        </p>
+    </div>
+    <a href="{% url 'wifi:admin_customers' %}" class="btn btn-outline-secondary rounded-pill">
+        <i class="bi bi-arrow-left me-2"></i>Back to Customers
+    </a>
+</div>
+
+<!-- Summary Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3 col-6">
+        <div class="summary-card">
+            <div class="summary-icon text-primary"><i class="bi bi-credit-card"></i></div>
+            <div class="summary-number">{{ payments|length }}</div>
+            <div class="summary-label">Total Payments</div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="summary-card">
+            <div class="summary-icon text-success"><i class="bi bi-cash-stack"></i></div>
+            <div class="summary-number">UGX {{ total_spent|default:0|floatformat:0 }}</div>
+            <div class="summary-label">Total Spent</div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="summary-card">
+            <div class="summary-icon text-info"><i class="bi bi-wifi"></i></div>
+            <div class="summary-number">{{ active_subscriptions_count|default:0 }}</div>
+            <div class="summary-label">Active Subscriptions</div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="summary-card">
+            <div class="summary-icon text-secondary"><i class="bi bi-device-tablet"></i></div>
+            <div class="summary-number">{{ devices|length }}</div>
+            <div class="summary-label">Devices</div>
+        </div>
+    </div>
+</div>
+
+<!-- Customer Details -->
+<div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="info-card">
+            <h6 class="fw-bold text-muted"><i class="bi bi-info-circle me-2"></i>Customer Information</h6>
+            <hr>
+            <p><strong>Phone:</strong> {{ customer.phone_number }}</p>
+            <p><strong>Name:</strong> {{ customer.name|default:"Not provided" }}</p>
+            <p><strong>Joined:</strong> {{ customer.created_at|date:"d M Y H:i" }}</p>
+            <p><strong>Last Updated:</strong> {{ customer.updated_at|date:"d M Y H:i" }}</p>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="info-card">
+            <h6 class="fw-bold text-muted"><i class="bi bi-device-tablet me-2"></i>Devices</h6>
+            <hr>
+            <ul class="list-group list-group-flush">
+                {% for device in devices %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>
+                        <i class="bi bi-wifi me-2"></i>{{ device.mac_address }}
+                        <span class="badge bg-{% if device.is_authorized %}success{% else %}secondary{% endif %} ms-2">
+                            {% if device.is_authorized %}Authorized{% else %}Pending{% endif %}
+                        </span>
+                    </span>
+                    <small class="text-muted">{{ device.ip_address|default:"No IP" }}</small>
+                </li>
+                {% empty %}
+                <li class="list-group-item text-muted">No devices registered.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Subscriptions -->
+<div class="info-card mb-4">
+    <h6 class="fw-bold text-muted"><i class="bi bi-clock-history me-2"></i>Subscriptions</h6>
+    <hr>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Package</th>
+                    <th>Started</th>
+                    <th>Expires</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sub in subscriptions %}
+                <tr>
+                    <td><strong>{{ sub.package.name }}</strong></td>
+                    <td>{{ sub.started_at|date:"d M Y H:i" }}</td>
+                    <td>{{ sub.expires_at|date:"d M Y H:i" }}</td>
+                    <td>
+                        <span class="badge bg-{% if sub.status == 'active' %}success{% elif sub.status == 'expired' %}danger{% else %}secondary{% endif %} rounded-pill px-3 py-2">
+                            {{ sub.status|title }}
+                        </span>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" class="text-center text-muted">No subscriptions.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Payments -->
+<div class="info-card">
+    <h6 class="fw-bold text-muted"><i class="bi bi-credit-card me-2"></i>Payments (last 10)</h6>
+    <hr>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Reference</th>
+                    <th>Package</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in payments|slice:":10" %}
+                <tr>
+                    <td><code>{{ payment.reference|truncatechars:8 }}</code></td>
+                    <td>{{ payment.package.name }}</td>
+                    <td><strong>UGX {{ payment.amount }}</strong></td>
+                    <td>
+                        <span class="badge bg-{% if payment.status == 'successful' %}success{% elif payment.status == 'failed' %}danger{% else %}warning{% endif %} rounded-pill px-3 py-2">
+                            {{ payment.status|title }}
+                        </span>
+                    </td>
+                    <td>{{ payment.created_at|date:"d M Y H:i" }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5" class="text-center text-muted">No payments.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .summary-card {
+        background: white;
+        border-radius: 20px;
+        padding: 1.2rem 1rem;
+        text-align: center;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.2s;
+    }
+    .summary-card:hover {
+        transform: translateY(-4px);
+    }
+    .summary-icon {
+        font-size: 2rem;
+        opacity: 0.7;
+    }
+    .summary-number {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin: 0.2rem 0;
+    }
+    .summary-label {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .info-card {
+        background: white;
+        border-radius: 20px;
+        padding: 1.5rem;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+    }
+    .info-card hr {
+        opacity: 0.3;
+        margin: 0.8rem 0;
+    }
+    .list-group-item {
+        border-color: var(--border-color);
+        background: transparent;
+    }
+    .table th {
+        font-weight: 600;
+        color: var(--text-secondary);
+        border-top: none;
+    }
+    .table td {
+        vertical-align: middle;
+    }
+    .table-light {
+        background-color: var(--bg);
+    }
+    .badge.rounded-pill {
+        font-weight: 500;
+    }
+    code {
+        background: var(--bg);
+        padding: 0.2rem 0.5rem;
+        border-radius: 6px;
+        font-size: 0.85rem;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'wifi/base.html' %}
+{% block title %}Manage Packages – MAC Technologies{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold" style="color: var(--brand-blue);"><i class="bi bi-boxes me-2"></i>Packages</h2>
+    <a href="{% url 'wifi:admin_package_create' %}" class="btn btn-primary"><i class="bi bi-plus-circle me-2"></i>New Package</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Name</th>
+                <th>Price (UGX)</th>
+                <th>Duration</th>
+                <th>Data</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for package in packages %}
+            <tr>
+                <td><strong>{{ package.name }}</strong></td>
+                <td>{{ package.price }}</td>
+                <td>{{ package.get_duration_display }}</td>
+                <td>{% if package.is_unlimited %}Unlimited{% else %}{{ package.data_limit }} MB{% endif %}</td>
+                <td>
+                    <span class="badge {% if package.is_active %}bg-success{% else %}bg-secondary{% endif %}">
+                        {% if package.is_active %}Active{% else %}Inactive{% endif %}
+                    </span>
+                </td>
+                <td>
+                    <a href="{% url 'wifi:admin_package_edit' package.id %}" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                    <a href="{% url 'wifi:admin_package_toggle' package.id %}" class="btn btn-sm btn-outline-warning">
+                        <i class="bi bi-{% if package.is_active %}pause-circle{% else %}play-circle{% endif %}"></i>
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" class="text-center">No packages created yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<a href="{% url 'wifi:admin_dashboard' %}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-2"></i>Back</a>
+{% endblock %}

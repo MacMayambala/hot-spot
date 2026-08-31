@@ -1,0 +1,191 @@
+{% extends 'wifi/base.html' %}
+{% block title %}Customers – MAC Technologies{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold" style="color: var(--brand-blue);"><i class="bi bi-people me-2"></i>Customers</h2>
+    <span class="badge bg-primary rounded-pill px-3 py-2">{{ total_customers }} total</span>
+</div>
+
+{% include 'wifi/admin/_nav.html' %}
+
+<!-- Summary Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3 col-6">
+        <div class="stat-card-mini">
+            <div class="stat-icon-mini"><i class="bi bi-people-fill"></i></div>
+            <div class="stat-number-mini">{{ total_customers }}</div>
+            <div class="stat-label-mini">Total Customers</div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card-mini">
+            <div class="stat-icon-mini text-success"><i class="bi bi-person-check-fill"></i></div>
+            <div class="stat-number-mini">{{ active_customers }}</div>
+            <div class="stat-label-mini">Active Now</div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card-mini">
+            <div class="stat-icon-mini text-warning"><i class="bi bi-clock-history"></i></div>
+            <div class="stat-number-mini">{{ expired_customers }}</div>
+            <div class="stat-label-mini">Expired</div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card-mini">
+            <div class="stat-icon-mini text-info"><i class="bi bi-credit-card"></i></div>
+            <div class="stat-number-mini">UGX {{ total_revenue|floatformat:0 }}</div>
+            <div class="stat-label-mini">Total Revenue</div>
+        </div>
+    </div>
+</div>
+
+<!-- Search -->
+<form method="get" class="mb-4">
+    <div class="input-group input-group-lg">
+        <span class="input-group-text bg-white border-2" style="border-color: var(--border-color); border-radius: 50px 0 0 50px;">
+            <i class="bi bi-search"></i>
+        </span>
+        <input type="text" name="q" class="form-control border-2" style="border-color: var(--border-color); border-radius: 0;" 
+               placeholder="Search by phone or name..." value="{{ query }}">
+        <button type="submit" class="btn btn-primary" style="border-radius: 0 50px 50px 0; padding: 0.6rem 1.5rem;">
+            Search
+        </button>
+    </div>
+</form>
+
+<!-- Table -->
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Phone</th>
+                <th>Name</th>
+                <th>Devices</th>
+                <th>Status</th>
+                <th>Joined</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr>
+                <td><strong>{{ customer.phone_number }}</strong></td>
+                <td>{{ customer.name|default:"—" }}</td>
+                <td>{{ customer.devices.count }}</td>
+                <td>
+                    {% if customer.is_active %}
+                        <span class="badge bg-success rounded-pill">Active</span>
+                    {% else %}
+                        <span class="badge bg-secondary rounded-pill">Inactive</span>
+                    {% endif %}
+                </td>
+                <td>{{ customer.created_at|date:"d M Y" }}</td>
+                <td>
+                    <a href="{% url 'wifi:admin_customer_detail' customer.id %}" class="btn btn-sm btn-outline-primary rounded-pill">
+                        <i class="bi bi-eye"></i> View
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" class="text-center py-4 text-muted">No customers found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Pagination -->
+{% if is_paginated %}
+<nav class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1{% if query %}&q={{ query }}{% endif %}">&laquo; First</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}">Previous</a></li>
+        {% endif %}
+        <li class="page-item active"><span class="page-link">{{ page_obj.number }}</span></li>
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}">Next</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if query %}&q={{ query }}{% endif %}">Last &raquo;</a></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+<a href="{% url 'wifi:admin_dashboard' %}" class="btn btn-outline-secondary rounded-pill"><i class="bi bi-arrow-left me-2"></i>Back to Dashboard</a>
+
+<style>
+    .stat-card-mini {
+        background: white;
+        border-radius: 16px;
+        padding: 1rem;
+        text-align: center;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.2s;
+    }
+    .stat-card-mini:hover {
+        transform: translateY(-3px);
+    }
+    .stat-icon-mini {
+        font-size: 1.8rem;
+        opacity: 0.7;
+        color: var(--brand-blue);
+    }
+    .stat-number-mini {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0.2rem 0;
+    }
+    .stat-label-mini {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
+    .input-group-text {
+        border-width: 2px;
+        border-color: var(--border-color);
+        background: white;
+    }
+    .input-group .form-control {
+        border-left: none;
+        border-right: none;
+    }
+    .input-group .form-control:focus {
+        border-color: var(--brand-blue);
+        box-shadow: none;
+    }
+    .input-group .btn-primary {
+        border-width: 2px;
+        border-color: var(--brand-blue);
+    }
+    .page-link {
+        color: var(--brand-blue);
+        border-radius: 50px;
+        margin: 0 3px;
+    }
+    .page-item.active .page-link {
+        background-color: var(--brand-blue);
+        border-color: var(--brand-blue);
+        border-radius: 50px;
+    }
+    .table th {
+        font-weight: 600;
+        color: var(--text-secondary);
+        border-top: none;
+    }
+    .table td {
+        vertical-align: middle;
+    }
+    .table-light {
+        background-color: var(--bg);
+    }
+    .badge.rounded-pill {
+        font-weight: 500;
+        padding: 0.4rem 0.9rem;
+    }
+</style>
+{% endblock %}

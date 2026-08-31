@@ -1,0 +1,214 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MAC Technologies - WiFi{% endblock %}</title>
+    
+    <link rel="icon" type="image/png" href="{% static 'wifi/images/favicon.png' %}">
+    <!-- Flatpickr CSS & JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/airbnb.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --brand-blue: #1632af;
+            --brand-blue-light: #2a4ad8;
+            --brand-blue-dark: #0f1f7a;
+            --brand-gradient: linear-gradient(135deg, #1632af 0%, #4a6cf7 100%);
+            --bg: #f4f7fc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --shadow-sm: 0 4px 20px rgba(22, 50, 175, 0.08);
+            --shadow-hover: 0 16px 40px rgba(22, 50, 175, 0.15);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+            min-height: 100vh;
+        }
+
+        .navbar-wifi {
+            background: var(--brand-gradient) !important;
+            padding: 0.9rem 2rem;
+            box-shadow: 0 4px 30px rgba(22, 50, 175, 0.25);
+            border-bottom: none;
+        }
+        .navbar-wifi .navbar-brand {
+            font-weight: 800;
+            color: white !important;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.5px;
+        }
+        .navbar-wifi .navbar-brand i {
+            font-size: 2rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+        .navbar-wifi .navbar-brand span {
+            background: rgba(255,255,255,0.15);
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .navbar-wifi .nav-link {
+            color: rgba(255,255,255,0.85) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            transition: all 0.2s;
+        }
+        .navbar-wifi .nav-link:hover {
+            background: rgba(255,255,255,0.15);
+            color: white !important;
+            transform: translateY(-1px);
+        }
+
+        .wifi-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            padding: 2.2rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .wifi-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-4px);
+        }
+
+        .btn-primary {
+            background: var(--brand-gradient);
+            border: none;
+            padding: 0.7rem 2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(22, 50, 175, 0.25);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(22, 50, 175, 0.35);
+            background: var(--brand-gradient);
+        }
+
+        .btn-outline-primary {
+            border: 2px solid var(--brand-blue);
+            color: var(--brand-blue);
+            font-weight: 600;
+            border-radius: 50px;
+        }
+        .btn-outline-primary:hover {
+            background: var(--brand-blue);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .alert {
+            border-radius: 16px;
+            border: none;
+        }
+
+        .footer {
+            background: white;
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem 0;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-wifi { padding: 0.6rem 1rem; }
+            .wifi-card { padding: 1.5rem; }
+            .navbar-wifi .navbar-brand { font-size: 1.2rem; }
+        }
+    </style>
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar navbar-expand-lg navbar-wifi">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'wifi:portal' %}">
+                <i class="bi bi-wifi"></i>
+                MAC Technologies
+                <span>Hotspot</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#wifiNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="wifiNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'wifi:packages' %}"><i class="bi bi-grid me-1"></i> Packages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'wifi:dashboard' %}"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'wifi:history' %}"><i class="bi bi-clock-history me-1"></i> History</a>
+                    </li>
+                    {% if user.is_staff %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'wifi:admin_dashboard' %}"><i class="bi bi-shield-lock me-1"></i> Admin</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== MESSAGES ===== -->
+    <div class="container mt-3">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    <i class="bi 
+                        {% if message.tags == 'success' %}bi-check-circle-fill
+                        {% elif message.tags == 'error' or message.tags == 'danger' %}bi-x-circle-fill
+                        {% else %}bi-info-circle
+                        {% endif %} me-2">
+                    </i>
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="container py-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <small>&copy; 2026 MAC Technologies &bull; Fast &bull; Reliable &bull; Secure</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

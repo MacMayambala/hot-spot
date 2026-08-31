@@ -1,0 +1,61 @@
+{% extends 'wifi/base.html' %}
+{% load static %}
+{% block title %}Payment History – MAC Technologies{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 animate-fade">
+        <h3 class="fw-bold" style="color: var(--brand-blue);"><i class="bi bi-clock-history me-2"></i>Payment History</h3>
+        <div class="table-responsive mt-3">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Reference</th>
+                        <th>Package</th>
+                        <th>Amount</th>
+                        <th>Provider</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                        <tr>
+                            <td><code>{{ payment.reference|truncatechars:8 }}</code></td>
+                            <td>{{ payment.package.name }}</td>
+                            <td><strong>UGX {{ payment.amount }}</strong></td>
+                            <td>{{ payment.get_provider_display }}</td>
+                            <td>
+                                <span class="badge {% if payment.status == 'successful' %}bg-success{% elif payment.status == 'failed' %}bg-danger{% elif payment.status == 'pending' or payment.status == 'processing' %}bg-warning{% else %}bg-secondary{% endif %} px-3 py-2">
+                                    {{ payment.status|title }}
+                                </span>
+                            </td>
+                            <td>{{ payment.created_at|date:"d M Y H:i" }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-muted">You have no payments yet.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-3">
+            <a href="{% url 'wifi:dashboard' %}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-2"></i> Back</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .animate-fade {
+        animation: fadeUp 0.6s ease forwards;
+        opacity: 0;
+    }
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    table th { font-weight: 600; color: var(--text-secondary); }
+    code { background: var(--bg); padding: 0.2rem 0.5rem; border-radius: 6px; }
+</style>
+{% endblock %}

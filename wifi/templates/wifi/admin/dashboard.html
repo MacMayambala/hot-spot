@@ -1,0 +1,225 @@
+{% extends 'wifi/base.html' %}
+{% load static %}
+{% block title %}Admin Dashboard – MAC Technologies{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold" style="color: var(--brand-blue);"><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</h2>
+    <span class="badge bg-primary">Staff</span>
+</div>
+
+<!-- Sub-Navigation -->
+{% include 'wifi/admin/_nav.html' %}
+
+<!-- Quick Access -->
+<div class="row g-4 mb-4">
+    <div class="col-md-4 col-6">
+        <a href="{% url 'wifi:admin_packages' %}" class="text-decoration-none">
+            <div class="quick-card">
+                <i class="bi bi-boxes fs-1"></i>
+                <h5 class="mt-2">Manage Packages</h5>
+                <small class="text-muted">Create, edit, toggle packages</small>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4 col-6">
+        <a href="{% url 'wifi:admin_customers' %}" class="text-decoration-none">
+            <div class="quick-card">
+                <i class="bi bi-people fs-1"></i>
+                <h5 class="mt-2">Manage Customers</h5>
+                <small class="text-muted">View and search customers</small>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4 col-6">
+        <a href="{% url 'wifi:admin_payments' %}" class="text-decoration-none">
+            <div class="quick-card">
+                <i class="bi bi-credit-card fs-1"></i>
+                <h5 class="mt-2">View Payments</h5>
+                <small class="text-muted">Filter and export payments</small>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- KPI Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3 col-6">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="bi bi-wallet2"></i></div>
+            <div class="stat-number">UGX {{ total_revenue|floatformat:0 }}</div>
+            <div class="stat-label">Total Revenue</div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="bi bi-calendar-check"></i></div>
+            <div class="stat-number">UGX {{ today_revenue|floatformat:0 }}</div>
+            <div class="stat-label">Today's Revenue</div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="bi bi-people"></i></div>
+            <div class="stat-number">{{ total_customers }}</div>
+            <div class="stat-label">Total Customers</div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="bi bi-wifi"></i></div>
+            <div class="stat-number">{{ active_subscriptions }}</div>
+            <div class="stat-label">Active Users</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-4 col-6">
+        <div class="stat-card">
+            <div class="stat-number">{{ expired_subscriptions }}</div>
+            <div class="stat-label">Expired Users</div>
+        </div>
+    </div>
+    <div class="col-md-4 col-6">
+        <div class="stat-card">
+            <div class="stat-number text-success">{{ successful_payments }}</div>
+            <div class="stat-label">Successful Payments</div>
+        </div>
+    </div>
+    <div class="col-md-4 col-6">
+        <div class="stat-card">
+            <div class="stat-number text-danger">{{ failed_payments }}</div>
+            <div class="stat-label">Failed Payments</div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts -->
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="wifi-card">
+            <h5 class="fw-bold">Revenue Trend (Last 7 Days)</h5>
+            <canvas id="revenueChart" height="200"></canvas>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="wifi-card">
+            <h5 class="fw-bold">Revenue by Provider</h5>
+            <canvas id="providerChart" height="200"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="wifi-card">
+            <h5 class="fw-bold">Popular Packages</h5>
+            <ul class="list-group list-group-flush">
+                {% for pkg in popular_packages %}
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>{{ pkg.package__name }}</span>
+                    <span class="badge bg-primary rounded-pill">{{ pkg.count }} subscriptions</span>
+                </li>
+                {% empty %}
+                <li class="list-group-item">No data yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    .stat-card {
+        background: white;
+        border-radius: 20px;
+        padding: 1.2rem 1rem;
+        text-align: center;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.2s;
+    }
+    .stat-card:hover {
+        transform: translateY(-4px);
+    }
+    .stat-icon {
+        font-size: 2rem;
+        color: var(--brand-blue);
+        opacity: 0.7;
+    }
+    .stat-number {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--brand-blue);
+        margin: 0.2rem 0;
+    }
+    .stat-label {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .list-group-item {
+        border-color: var(--border-color);
+    }
+    .quick-card {
+        background: white;
+        border-radius: 20px;
+        padding: 1.5rem 1rem;
+        text-align: center;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+        transition: all 0.3s ease;
+        color: var(--text-primary);
+    }
+    .quick-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--brand-blue);
+        box-shadow: var(--shadow-hover);
+    }
+    .quick-card i {
+        color: var(--brand-blue);
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+    new Chart(revenueCtx, {
+        type: 'line',
+        data: {
+            labels: [{% for item in revenue_by_day %}'{{ item.date }}',{% endfor %}],
+            datasets: [{
+                label: 'Revenue (UGX)',
+                data: [{% for item in revenue_by_day %}{{ item.amount }},{% endfor %}],
+                borderColor: '#1632af',
+                backgroundColor: 'rgba(22, 50, 175, 0.1)',
+                tension: 0.4,
+                fill: true,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    const providerCtx = document.getElementById('providerChart').getContext('2d');
+    new Chart(providerCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['MTN', 'Airtel'],
+            datasets: [{
+                data: [{{ mtn_revenue|floatformat:0 }}, {{ airtel_revenue|floatformat:0 }}],
+                backgroundColor: ['#1632af', '#ff7f00'],
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'bottom' } }
+        }
+    });
+</script>
+{% endblock %}

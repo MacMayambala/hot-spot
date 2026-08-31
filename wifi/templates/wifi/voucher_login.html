@@ -1,0 +1,25 @@
+{% extends 'wifi/base.html' %}
+{% block title %}Enter Voucher – MAC Technologies{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="wifi-card">
+            <h3 class="fw-bold" style="color: var(--brand-blue);"><i class="bi bi-ticket me-2"></i>Enter Voucher Code</h3>
+            <p class="text-muted">Enter the voucher code you received after payment to connect your device.</p>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input type="text" name="voucher" class="form-control form-control-lg text-center" 
+                           placeholder="e.g., A1B2C3" maxlength="10" autofocus
+                           style="text-transform: uppercase; letter-spacing: 4px; font-size: 1.5rem;">
+                </div>
+                <button type="submit" class="btn btn-primary w-100 py-2"><i class="bi bi-wifi me-2"></i>Connect</button>
+            </form>
+            <div class="mt-3 text-center">
+                <a href="{% url 'wifi:portal' %}" class="btn btn-outline-secondary">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

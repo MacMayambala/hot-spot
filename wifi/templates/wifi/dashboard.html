@@ -1,0 +1,128 @@
+{% extends 'wifi/base.html' %}
+{% load static %}
+{% block title %}Dashboard – MAC Technologies{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 col-12">
+        <div class="d-flex align-items-center mb-4 animate-fade">
+            <i class="bi bi-person-circle fs-1 me-3" style="color: var(--brand-blue);"></i>
+            <div>
+                <h3 class="fw-bold mb-0">Hello, {{ customer.name|default:customer.phone_number }}!</h3>
+                <small class="text-muted">Your internet connection is active</small>
+            </div>
+        </div>
+
+        {% if subscription %}
+            <div class="wifi-card animate-fade" style="animation-delay: 100ms;">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold" style="color: var(--brand-blue);">{{ subscription.package.name }}</h5>
+                            <span class="badge bg-success px-3 py-2">Active</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="stat-box">
+                            <div class="stat-label text-muted small">Started</div>
+                            <div class="stat-number">{{ subscription.started_at|date:"d M Y H:i" }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="stat-box">
+                            <div class="stat-label text-muted small">Expires</div>
+                            <div class="stat-number">{{ subscription.expires_at|date:"d M Y H:i" }}</div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="stat-box">
+                            <div class="stat-label text-muted small">Time Remaining</div>
+                            <div class="stat-number" id="time-remaining" style="font-size: 2.2rem; font-weight: 800;">{{ subscription.expires_at|timeuntil }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="stat-box">
+                            <div class="stat-label text-muted small">Data Used</div>
+                            <div class="stat-number">{{ subscription.data_used }} MB</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="stat-box">
+                            <div class="stat-label text-muted small">Data Limit</div>
+                            <div class="stat-number">{% if subscription.data_limit == 0 %}Unlimited{% else %}{{ subscription.data_limit }} MB{% endif %}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4 animate-fade" style="animation-delay: 200ms;">
+                <a href="{% url 'wifi:packages' %}" class="btn btn-primary">
+                    <i class="bi bi-plus-circle me-2"></i> Buy More Time
+                </a>
+                <a href="{% url 'wifi:history' %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-clock-history me-2"></i> Payment History
+                </a>
+                <a href="{% url 'wifi:portal' %}" class="btn btn-outline-danger">
+                    <i class="bi bi-box-arrow-right me-2"></i> Logout
+                </a>
+            </div>
+        {% else %}
+            <div class="wifi-card text-center py-5 animate-fade" style="animation-delay: 100ms;">
+                <i class="bi bi-exclamation-triangle fs-1 text-warning"></i>
+                <h4 class="mt-3">No Active Package</h4>
+                <p class="text-muted">You don't have an active internet subscription.</p>
+                <a href="{% url 'wifi:packages' %}" class="btn btn-primary mt-2">
+                    <i class="bi bi-cart-plus me-2"></i> Buy a Package
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .animate-fade {
+        animation: fadeUp 0.6s ease forwards;
+        opacity: 0;
+    }
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .stat-box {
+        background: var(--bg);
+        border-radius: 16px;
+        padding: 1rem 1.2rem;
+        text-align: center;
+        border: 1px solid var(--border-color);
+    }
+    .stat-number {
+        font-weight: 700;
+        font-size: 1.4rem;
+        color: var(--brand-blue);
+    }
+</style>
+
+{% block extra_js %}
+<script>
+    // Update time remaining every second
+    const expires = new Date('{{ subscription.expires_at|date:"c" }}');
+    function updateTime() {
+        const now = new Date();
+        const diff = expires - now;
+        if (diff <= 0) {
+            location.reload();
+        } else {
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById('time-remaining').textContent = 
+                String(hours).padStart(2, '0') + ':' + 
+                String(minutes).padStart(2, '0') + ':' + 
+                String(seconds).padStart(2, '0');
+        }
+    }
+    setInterval(updateTime, 1000);
+</script>
+{% endblock %}
+{% endblock %}
