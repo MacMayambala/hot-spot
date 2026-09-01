@@ -1712,3 +1712,14 @@ Port 8728 not reachable on 192.168.126.206
 Port 8728 not reachable on 192.168.126.206
 Port 8728 not reachable on 192.168.126.206
 Port 8728 not reachable on 192.168.126.206
+Watching for file changes with StatReloader
+MarzPay collection request: reference=5b3be8b7-e4dd-405e-9406-1155c9a85082, phone=+256776203790, amount=3000
+MarzPay collection initiated successfully: 5b3be8b7-e4dd-405e-9406-1155c9a85082
+Payment initiated: 5b3be8b7-e4dd-405e-9406-1155c9a85082
+MarzPay collection request: reference=767612a7-dc48-4865-b4de-91f1e9bbe50d, phone=+256776203790, amount=700
+MarzPay collection initiated successfully: 767612a7-dc48-4865-b4de-91f1e9bbe50d
+Payment initiated: 767612a7-dc48-4865-b4de-91f1e9bbe50d
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py changed, reloading.
+Watching for file changes with StatReloader

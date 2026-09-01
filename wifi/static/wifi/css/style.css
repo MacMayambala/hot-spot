@@ -1,10 +1,193 @@
-body {
-    background-color: #f8f9fa;
+/* ===== Professional Message Alerts ===== */
+.alert {
+    border-radius: 16px;
+    border: none;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    animation: slideInDown 0.4s ease;
 }
-.card {
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+
+.alert i {
+    font-size: 1.5rem;
+    flex-shrink: 0;
 }
-.navbar-brand {
-    font-weight: bold;
+
+.alert-success {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    color: #1e7e34;
+    border-left: 4px solid #28a745;
+}
+
+.alert-success i {
+    color: #28a745;
+}
+
+.alert-danger, .alert-error {
+    background: linear-gradient(135deg, #fce4ec 0%, #ffcdd2 100%);
+    color: #c62828;
+    border-left: 4px solid #dc3545;
+}
+
+.alert-danger i, .alert-error i {
+    color: #dc3545;
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    color: #e65100;
+    border-left: 4px solid #ffc107;
+}
+
+.alert-warning i {
+    color: #ffc107;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    color: #0d47a1;
+    border-left: 4px solid #2196f3;
+}
+
+.alert-info i {
+    color: #2196f3;
+}
+
+/* ===== Toast-style Notifications ===== */
+.toast-message {
+    background: white;
+    border-radius: 16px;
+    padding: 1.2rem 1.8rem;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-weight: 500;
+    animation: slideInRight 0.5s ease;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.toast-message i {
+    font-size: 1.8rem;
+}
+
+.toast-message.success {
+    border-left: 4px solid #28a745;
+}
+
+.toast-message.success i {
+    color: #28a745;
+}
+
+.toast-message.error {
+    border-left: 4px solid #dc3545;
+}
+
+.toast-message.error i {
+    color: #dc3545;
+}
+
+.toast-message.warning {
+    border-left: 4px solid #ffc107;
+}
+
+.toast-message.warning i {
+    color: #ffc107;
+}
+
+.toast-message.info {
+    border-left: 4px solid #2196f3;
+}
+
+.toast-message.info i {
+    color: #2196f3;
+}
+
+/* ===== Animations ===== */
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ===== Close Button ===== */
+.alert .btn-close {
+    padding: 0.5rem;
+    margin-left: auto;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.alert .btn-close:hover {
+    opacity: 1;
+}
+
+/* ===== Login-specific message ===== */
+.login-message-container {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.login-error {
+    background: linear-gradient(135deg, #fce4ec 0%, #ffcdd2 100%);
+    border-radius: 16px;
+    padding: 1rem 1.5rem;
+    color: #c62828;
+    border-left: 4px solid #dc3545;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: shake 0.5s ease;
+}
+
+.login-error i {
+    font-size: 1.5rem;
+    color: #dc3545;
+}
+
+.login-success {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    border-radius: 16px;
+    padding: 1rem 1.5rem;
+    color: #1e7e34;
+    border-left: 4px solid #28a745;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.login-success i {
+    font-size: 1.5rem;
+    color: #28a745;
+}
+
+/* ===== Shake Animation for Error ===== */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+    20%, 40%, 60%, 80% { transform: translateX(8px); }
 }

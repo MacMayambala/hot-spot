@@ -172,71 +172,181 @@ from .services.payments import process_webhook_payload
 
 logger = logging.getLogger(__name__)
 
+import json
+import hmac
+import hashlib
+import logging
+import uuid
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.http import HttpResponseBadRequest, JsonResponse
+from django.db import transaction
+from django.utils import timezone
+from django.conf import settings
+from .models import WifiPayment, WifiDevice
+from .services.subscriptions import create_subscription
+from .services.mikrotik import RemoteMikroTikManager
+
+logger = logging.getLogger(__name__)
+
+import json
+import hmac
+import hashlib
+import logging
+import uuid
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.http import HttpResponseBadRequest, JsonResponse
+from django.db import transaction
+from django.utils import timezone
+from django.conf import settings
+from .models import WifiPayment, WifiDevice
+from .services.subscriptions import create_subscription
+
+logger = logging.getLogger(__name__)
+
 @csrf_exempt
 @require_POST
 def webhook(request):
     """
-    MarzPay webhook handler with HMAC signature verification.
-    Handles both direct callback and dashboard-wrapped payloads.
+    MarzPay webhook handler – Uganda collections (MTN/Airtel).
+    Accepts both direct and dashboard-wrapped payloads.
+    Signature verification is optional: if header present, verify; if missing, log and proceed.
     """
-    # 1. Validate HMAC signature (if secret is configured)
-    webhook_secret = getattr(settings, 'MARZPAY_WEBHOOK_SECRET', None)
-    if webhook_secret:
-        # Get signature header
-        signature_header = request.headers.get('X-MarzPay-Signature')
-        if not signature_header:
-            logger.warning("Webhook missing X-MarzPay-Signature header")
-            return HttpResponseBadRequest("Missing signature header")
-
-        # Parse signature: format "t=1234567890,v1=abcdef..."
-        try:
-            parts = dict(item.split('=') for item in signature_header.split(','))
-            timestamp = parts.get('t')
-            signature = parts.get('v1')
-        except (ValueError, KeyError):
-            logger.warning("Invalid signature format")
-            return HttpResponseBadRequest("Invalid signature format")
-
-        # Build the signed string: timestamp + '.' + raw request body
-        raw_body = request.body
-        signed_string = f"{timestamp}.{raw_body.decode('utf-8')}"
-
-        # Compute HMAC
-        computed = hmac.new(
-            webhook_secret.encode('utf-8'),
-            signed_string.encode('utf-8'),
-            hashlib.sha256
-        ).hexdigest()
-
-        # Compare in constant time
-        if not hmac.compare_digest(computed, signature):
-            logger.warning(f"Invalid webhook signature. Expected: {computed}, got: {signature}")
-            return HttpResponseBadRequest("Invalid signature")
-
-    # 2. Parse JSON payload
+    raw_body = request.body
     try:
-        payload = json.loads(request.body)
+        payload = json.loads(raw_body)
     except json.JSONDecodeError as e:
-        logger.error(f"Invalid JSON in webhook: {e}")
+        logger.error(f"Invalid JSON: {e}")
         return HttpResponseBadRequest("Invalid JSON")
 
     logger.info(f"Webhook received: {payload}")
 
-    # 3. Process payment (idempotent)
-    try:
-        success = process_webhook_payload(payload)
-    except Exception as e:
-        logger.error(f"Error processing webhook: {e}")
-        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+    # ---- Optional HMAC signature verification ----
+    webhook_secret = getattr(settings, 'MARZPAY_WEBHOOK_SECRET', None)
+    if webhook_secret:
+        signature_header = request.headers.get('X-MarzPay-Signature')
+        if signature_header:
+            try:
+                parts = dict(item.split('=') for item in signature_header.split(','))
+                timestamp = parts.get('t')
+                signature = parts.get('v1')
+                if timestamp and signature:
+                    signed_string = f"{timestamp}.{raw_body.decode('utf-8')}"
+                    computed = hmac.new(
+                        webhook_secret.encode('utf-8'),
+                        signed_string.encode('utf-8'),
+                        hashlib.sha256
+                    ).hexdigest()
+                    if not hmac.compare_digest(computed, signature):
+                        logger.warning(f"Invalid signature for reference: {payload.get('transaction', {}).get('reference')}")
+                        return HttpResponseBadRequest("Invalid signature")
+                else:
+                    logger.warning("Signature header missing parts")
+            except Exception as e:
+                logger.warning(f"Signature parsing error: {e}")
+        else:
+            # Missing signature header – just log and continue (as per user request)
+            logger.info("No signature header, skipping HMAC verification")
 
-    if success:
-        return JsonResponse({'status': 'ok'})
+    # ---- Unwrap dashboard wrapper ----
+    if 'data' in payload and isinstance(payload['data'], dict):
+        payload = payload['data']
+
+    # ---- Extract reference ----
+    transaction_data = payload.get('transaction', {})
+    reference = transaction_data.get('reference') or payload.get('reference')
+    if not reference:
+        logger.error("No reference in webhook payload")
+        return HttpResponseBadRequest("Missing reference")
+
+    event_type = payload.get('event_type', '')
+
+    # ---- Determine status ----
+    if event_type.endswith('.completed'):
+        status = 'successful'
+    elif event_type.endswith('.failed'):
+        status = 'failed'
+    elif event_type.endswith('.cancelled'):
+        status = 'cancelled'
     else:
-        return JsonResponse({'status': 'error'}, status=500)
-# Admin views (optional custom)
-# For simplicity, we can use Django admin; but we might add custom admin dashboard later.
+        txn_status = transaction_data.get('status', '')
+        if txn_status in ('completed', 'success'):
+            status = 'successful'
+        elif txn_status in ('failed', 'error'):
+            status = 'failed'
+        elif txn_status == 'cancelled':
+            status = 'cancelled'
+        else:
+            status = 'pending'
 
+    logger.info(f"Payment {reference}: status -> {status} (event: {event_type})")
 
+    # ---- Get payment ----
+    try:
+        payment = WifiPayment.objects.get(reference=reference)
+    except WifiPayment.DoesNotExist:
+        logger.error(f"Payment not found for reference {reference}")
+        return HttpResponseBadRequest("Payment not found")
+
+    if payment.status in ('successful', 'failed', 'cancelled', 'expired'):
+        logger.info(f"Payment {reference} already final, ignoring")
+        return JsonResponse({'status': 'ok'})
+
+    # ---- Process ----
+    try:
+        with transaction.atomic():
+            payment.status = status
+            if status == 'successful':
+                payment.completed_at = timezone.now()
+                collection = payload.get('collection', {})
+                if collection.get('provider_transaction_id'):
+                    payment.provider_transaction_id = collection['provider_transaction_id']
+            payment.save()
+
+            if status == 'successful':
+                # Extract device_mac from metadata
+                metadata = payload.get('metadata', [])
+                device_mac = None
+                if isinstance(metadata, list):
+                    for item in metadata:
+                        if isinstance(item, dict) and 'device_mac' in item:
+                            device_mac = item['device_mac']
+                            break
+
+                # Fallback to customer's latest device
+                if not device_mac:
+                    device = payment.customer.devices.order_by('-last_seen').first()
+                    if device:
+                        device_mac = device.mac_address
+
+                if not device_mac:
+                    logger.error(f"No device MAC for payment {reference}")
+                    raise Exception("No device MAC found")
+
+                username = f"WIFI-{str(reference).split('-')[0].upper()}"
+                password = str(uuid.uuid4())[:8]
+                create_subscription(
+                    customer=payment.customer,
+                    package=payment.package,
+                    payment=payment,
+                    device_mac=device_mac,
+                    username=username,
+                    password=password
+                )
+                # Authorize device
+                WifiDevice.objects.filter(mac_address=device_mac).update(is_authorized=True)
+                logger.info(f"Subscription created for payment {reference}")
+
+            else:
+                logger.info(f"Payment {reference} marked as {status}")
+
+    except Exception as e:
+        logger.error(f"Error processing webhook for {reference}: {e}")
+        # Return 500 to ask MarzPay to retry later
+        return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'status': 'ok'})
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum, Count, Q
 from django.utils import timezone

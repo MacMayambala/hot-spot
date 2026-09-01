@@ -120,11 +120,6 @@
             transform: translateY(-2px);
         }
 
-        .alert {
-            border-radius: 16px;
-            border: none;
-        }
-
         .footer {
             background: white;
             border-top: 1px solid var(--border-color);
@@ -138,6 +133,126 @@
             .navbar-wifi { padding: 0.6rem 1rem; }
             .wifi-card { padding: 1.5rem; }
             .navbar-wifi .navbar-brand { font-size: 1.2rem; }
+        }
+
+        /* ============================================================
+           CENTERED TOAST MESSAGES – Red for errors, Green for success
+           ============================================================ */
+        #messageContainer {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            width: 100%;
+            max-width: 480px;
+            pointer-events: none;
+            text-align: center;
+        }
+        #messageContainer .alert {
+            pointer-events: auto;
+            display: inline-block;
+            margin: 0 auto;
+            text-align: left;
+            min-width: 320px;
+            max-width: 100%;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border: none;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: toastIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #fff !important;
+        }
+        #messageContainer .alert .alert-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        #messageContainer .alert .alert-content {
+            flex: 1;
+        }
+        #messageContainer .alert .alert-content strong {
+            display: block;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+        #messageContainer .alert .alert-content span {
+            font-weight: 400;
+            opacity: 0.85;
+            font-size: 0.9rem;
+        }
+        #messageContainer .alert .btn-close {
+            filter: brightness(0) invert(1);
+            opacity: 0.6;
+            transition: opacity 0.2s, transform 0.2s;
+            flex-shrink: 0;
+            margin-left: 4px;
+        }
+        #messageContainer .alert .btn-close:hover {
+            opacity: 1;
+            transform: rotate(90deg);
+        }
+
+        /* Error Toast – DARK RED (both danger and error tags) */
+        #messageContainer .alert-danger,
+        #messageContainer .alert-error {
+            background: rgba(185, 28, 28, 0.95) !important;
+            border-left: 4px solid #fca5a5 !important;
+            color: #fff !important;
+        }
+        #messageContainer .alert-danger .alert-icon,
+        #messageContainer .alert-error .alert-icon {
+            color: #fca5a5;
+        }
+
+        /* Success Toast – DARK GREEN */
+        #messageContainer .alert-success {
+            background: rgba(6, 78, 59, 0.95) !important;
+            border-left: 4px solid #6ee7b7 !important;
+            color: #fff !important;
+        }
+        #messageContainer .alert-success .alert-icon {
+            color: #6ee7b7;
+        }
+
+        /* Warning Toast – DARK ORANGE */
+        #messageContainer .alert-warning {
+            background: rgba(120, 53, 15, 0.95) !important;
+            border-left: 4px solid #fcd34d !important;
+            color: #fff !important;
+        }
+        #messageContainer .alert-warning .alert-icon {
+            color: #fcd34d;
+        }
+
+        /* Info Toast – DARK BLUE */
+        #messageContainer .alert-info {
+            background: rgba(8, 46, 83, 0.95) !important;
+            border-left: 4px solid #7dd3fc !important;
+            color: #fff !important;
+        }
+        #messageContainer .alert-info .alert-icon {
+            color: #7dd3fc;
+        }
+
+        /* Animations */
+        @keyframes toastIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(-20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes toastOut {
+            0% { opacity: 1; transform: scale(1) translateY(0); }
+            100% { opacity: 0; transform: scale(0.9) translateY(-20px); }
+        }
+        .toast-out {
+            animation: toastOut 0.3s ease forwards !important;
         }
     </style>
 
@@ -177,20 +292,48 @@
         </div>
     </nav>
 
-    <!-- ===== MESSAGES ===== -->
-    <div class="container mt-3">
+    <!-- ==========================================================
+         CENTERED TOAST MESSAGES – Red for errors, Green for success
+         ========================================================== -->
+    <div id="messageContainer">
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" id="message-box-{{ forloop.counter }}">
                     <i class="bi 
-                        {% if message.tags == 'success' %}bi-check-circle-fill
-                        {% elif message.tags == 'error' or message.tags == 'danger' %}bi-x-circle-fill
-                        {% else %}bi-info-circle
-                        {% endif %} me-2">
-                    </i>
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        {% if message.tags == 'error' or message.tags == 'danger' %}bi-x-circle-fill
+                        {% elif message.tags == 'success' %}bi-check-circle-fill
+                        {% elif message.tags == 'warning' %}bi-exclamation-triangle-fill
+                        {% else %}bi-info-circle-fill{% endif %} 
+                        alert-icon"></i>
+                    <div class="alert-content">
+                        <strong>
+                            {% if message.tags == 'error' or message.tags == 'danger' %}
+                                Error!
+                            {% elif message.tags == 'success' %}
+                                Success!
+                            {% elif message.tags == 'warning' %}
+                                Warning!
+                            {% else %}
+                                Info
+                            {% endif %}
+                        </strong>
+                        <span>{{ message }}</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
+                <script>
+                    (function() {
+                        const box = document.getElementById('message-box-{{ forloop.counter }}');
+                        if (box) {
+                            setTimeout(() => {
+                                box.classList.add('toast-out');
+                                setTimeout(() => {
+                                    if (box.parentNode) box.remove();
+                                }, 300);
+                            }, 5000);
+                        }
+                    })();
+                </script>
             {% endfor %}
         {% endif %}
     </div>
