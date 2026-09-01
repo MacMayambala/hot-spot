@@ -1,3 +1,4 @@
+
 # wifi/services/mikrotik.py
 import logging
 import socket
@@ -17,7 +18,7 @@ def get_connection():
         port=settings.MIKROTIK_PORT,
         username=settings.MIKROTIK_USERNAME,
         password=settings.MIKROTIK_PASSWORD,
-        ssl=settings.MIKROTIK_USE_SSL,
+        use_ssl=settings.MIKROTIK_USE_SSL,          # changed ssl→use_ssl
     )
 
 def create_hotspot_user(username, password, profile=None):
@@ -141,7 +142,7 @@ class RemoteMikroTikManager:
                 port=self.config['port'],
                 username=self.config['user'],
                 password=self.config['password'],
-                ssl=self.config.get('use_ssl', False),
+                use_ssl=self.config.get('use_ssl', False),   # changed
             )
             # Execute a simple read-only command
             api.path('/system/identity').select('name')
@@ -160,7 +161,7 @@ class RemoteMikroTikManager:
                     port=self.config['port'],
                     username=self.config['user'],
                     password=self.config['password'],
-                    ssl=self.config.get('use_ssl', False),
+                    use_ssl=self.config.get('use_ssl', False),   # changed
                 )
                 self.api = self.connection
                 # Test with a simple command
@@ -297,3 +298,50 @@ class RemoteMikroTikManager:
         except Exception as e:
             logger.error(f"Raw command failed: {e}")
             return None
+
+    def get_full_metrics(self):
+        """Collect all metrics: system resource, active users, interface traffic."""
+        if not self.api and not self.connect():
+            return None
+        metrics = {}
+        # System resource
+        try:
+            resource = self.api.path('/system/resource').get()[0]
+            metrics['cpu_load'] = float(resource.get('cpu-load', 0))
+            metrics['free_memory'] = int(resource.get('free-memory', 0))
+            metrics['total_memory'] = int(resource.get('total-memory', 0))
+            metrics['uptime'] = resource.get('uptime', '')
+        except Exception as e:
+            logger.error(f"Resource error: {e}")
+            return None
+        
+        # Active hotspot users
+        try:
+            active = self.api.path('/ip/hotspot/active').get()
+            metrics['active_users'] = len(active)
+        except Exception as e:
+            logger.error(f"Hotspot active error: {e}")
+            metrics['active_users'] = 0
+        
+        # Interface traffic – get first ethernet interface
+        try:
+            # Try to get the first ethernet interface
+            iface = self.api.path('/interface').select('name', 'rx-byte', 'tx-byte').where({'type': 'ether'}).first()
+            if iface:
+                metrics['rx_byte'] = int(iface.get('rx-byte', 0))
+                metrics['tx_byte'] = int(iface.get('tx-byte', 0))
+            else:
+                # Fallback to first interface
+                iface = self.api.path('/interface').select('name', 'rx-byte', 'tx-byte').first()
+                if iface:
+                    metrics['rx_byte'] = int(iface.get('rx-byte', 0))
+                    metrics['tx_byte'] = int(iface.get('tx-byte', 0))
+                else:
+                    metrics['rx_byte'] = 0
+                    metrics['tx_byte'] = 0
+        except Exception as e:
+            logger.error(f"Traffic error: {e}")
+            metrics['rx_byte'] = 0
+            metrics['tx_byte'] = 0
+        
+        return metrics
