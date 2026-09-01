@@ -1,0 +1,42 @@
+{% extends 'wifi/base.html' %}
+{% load static %}
+{% block title %}Add Branch – MAC Technologies{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold" style="color: var(--brand-blue);"><i class="bi bi-building me-2"></i>Add New Branch</h2>
+    <a href="{% url 'admin:app_list' 'wifi' %}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left me-1"></i> Back to Branches
+    </a>
+</div>
+
+<div class="wifi-card">
+    <form method="post" action="{% url 'wifi:branch_add' %}">
+        {% csrf_token %}
+        <div class="row g-4">
+            <div class="col-md-6">
+                <label for="name" class="form-label fw-bold">Branch Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="col-md-6">
+                <label for="contact_person" class="form-label fw-bold">Contact Person</label>
+                <input type="text" class="form-control" id="contact_person" name="contact_person">
+            </div>
+            <div class="col-md-6">
+                <label for="contact_phone" class="form-label fw-bold">Phone Number</label>
+                <input type="text" class="form-control" id="contact_phone" name="contact_phone">
+            </div>
+            <div class="col-12">
+                <label for="address" class="form-label fw-bold">Address</label>
+                <textarea class="form-control" id="address" name="address" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-1"></i> Create Branch
+            </button>
+            <a href="{% url 'admin:app_list' 'wifi' %}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

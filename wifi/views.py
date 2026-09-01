@@ -10,6 +10,7 @@ from django.views.decorators.http import require_POST
 from django.utils import timezone
 from django.contrib import messages
 from django.db import transaction
+from django.urls import path
 from .models import Customer, WifiDevice, WifiPackage, WifiPayment, WifiSubscription, WifiSession
 from .forms import CustomerPhoneForm, PackageSelectForm
 from .services.payments import initiate_payment, process_webhook_payload
@@ -246,6 +247,17 @@ from .models import WifiPackage, WifiPayment, WifiSubscription, Customer, WifiDe
 from .forms import PackageForm
 
 # ---------- ADMIN DASHBOARD ----------
+from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import render
+from django.utils import timezone
+from datetime import datetime, timedelta
+from django.db.models import Sum, Count
+from wifi.models import WifiPayment, Customer, WifiSubscription, MikroTikDevice
+from wifi.services.mikrotik import RemoteMikroTikManager
+import logging
+
+logger = logging.getLogger(__name__)
+
 @staff_member_required
 def admin_dashboard(request):
     today = timezone.now().date()
@@ -272,6 +284,25 @@ def admin_dashboard(request):
     airtel_revenue = WifiPayment.objects.filter(status='successful', provider='airtel').aggregate(Sum('amount'))['amount__sum'] or 0
     popular_packages = WifiSubscription.objects.values('package__name').annotate(count=Count('id')).order_by('-count')[:5]
 
+    # ---------- MikroTik Devices Status ----------
+    devices = MikroTikDevice.objects.filter(is_active=True).select_related('branch')
+    devices_status = []
+    for device in devices:
+        # Use cached last_connection_status if you prefer – but for real‑time we test fresh.
+        # For performance, you might want to use the stored status (updated via cron).
+        mgr = RemoteMikroTikManager(device=device)
+        reachable = mgr.test_connectivity()   # This does a TCP + API check – can be slow.
+        active_users = []
+        if reachable:
+            if mgr.connect():
+                active_users = mgr.get_active_users()
+                mgr.disconnect()
+        devices_status.append({
+            'device': device,
+            'reachable': reachable,
+            'active_users': active_users,
+        })
+
     context = {
         'total_revenue': total_revenue,
         'today_revenue': today_revenue,
@@ -284,9 +315,9 @@ def admin_dashboard(request):
         'mtn_revenue': mtn_revenue,
         'airtel_revenue': airtel_revenue,
         'popular_packages': popular_packages,
+        'devices_status': devices_status,   # new
     }
     return render(request, 'wifi/admin/dashboard.html', context)
-
 # ---------- PACKAGE MANAGEMENT ----------
 @staff_member_required
 def admin_packages(request):
@@ -501,3 +532,510 @@ def voucher_login(request):
             messages.error(request, 'Invalid or expired voucher code.')
 
     return render(request, 'wifi/voucher_login.html')
+
+
+# wifi/admin.py
+from django.contrib import admin
+from .models import Branch, MikroTikDevice
+from .services.mikrotik import RemoteMikroTikManager
+from django.contrib import messages
+from django.shortcuts import redirect
+from django.urls import reverse
+
+class MikroTikDeviceInline(admin.TabularInline):
+    model = MikroTikDevice
+    extra = 1
+    fields = ('name', 'ip_address', 'username', 'api_port', 'use_ssl', 'is_active', 'last_connection_status')
+    readonly_fields = ('last_connection_status',)
+
+@admin.register(Branch)
+class BranchAdmin(admin.ModelAdmin):
+    list_display = ('name', 'address', 'contact_person', 'contact_phone', 'created_at')
+    search_fields = ('name', 'address', 'contact_person')
+    inlines = [MikroTikDeviceInline]
+
+@admin.register(MikroTikDevice)
+class MikroTikDeviceAdmin(admin.ModelAdmin):
+    list_display = ('name', 'branch', 'ip_address', 'username', 'is_active', 'last_connection_status', 'last_check')
+    list_filter = ('branch', 'is_active', 'use_ssl')
+    search_fields = ('name', 'ip_address', 'username')
+    actions = ['test_connection_action']
+
+    def test_connection_action(self, request, queryset):
+        """Admin action to test connection for selected devices."""
+        for device in queryset:
+            mgr = RemoteMikroTikManager(device=device)
+            success = mgr.test_connectivity()
+            device.last_connection_status = success
+            device.last_check = datetime.now()
+            device.save()
+            if success:
+                self.message_user(request, f"{device.name} connected successfully.", level='SUCCESS')
+            else:
+                self.message_user(request, f"{device.name} failed to connect.", level='ERROR')
+        self.message_user(request, "Connection tests completed.")
+    test_connection_action.short_description = "Test connection for selected devices"
+
+    def get_urls(self):
+        from django.urls import path
+        urls = super().get_urls()
+        custom_urls = [
+            path('status/', self.admin_site.admin_view(self.status_dashboard), name='mikrotik_status'),
+        ]
+        return custom_urls + urls
+
+    # ---------- MIKROTIK STATUS DASHBOARD ----------
+@staff_member_required
+def mikrotik_status(request):
+    """Dashboard showing connection status for all active devices."""
+    devices = MikroTikDevice.objects.filter(is_active=True).select_related('branch')
+    status_list = []
+    for device in devices:
+        mgr = RemoteMikroTikManager(device=device)
+        reachable = mgr.test_connectivity()
+        system_info = None
+        active_users = []
+        if reachable:
+            if mgr.connect():
+                system_info = mgr.get_system_info()
+                active_users = mgr.get_active_users()
+                mgr.disconnect()
+        status_list.append({
+            'device': device,
+            'reachable': reachable,
+            'system_info': system_info,
+            'active_users': active_users,
+        })
+    context = {
+        'status_list': status_list,
+        'total_devices': len(devices),
+    }
+    return render(request, 'wifi/admin/mikrotik_status.html', context)
+
+
+@staff_member_required
+def device_detail_status(request, device_id):
+    """API endpoint for real‑time status of a single device."""
+    device = MikroTikDevice.objects.get(id=device_id)
+    mgr = RemoteMikroTikManager(device=device)
+    data = {
+        'id': device.id,
+        'name': device.name,
+        'reachable': mgr.test_connectivity(),
+    }
+    if data['reachable']:
+        if mgr.connect():
+            data['system_info'] = mgr.get_system_info()
+            data['active_users'] = mgr.get_active_users()
+            mgr.disconnect()
+    return JsonResponse(data)
+
+
+@staff_member_required
+def execute_command(request):
+    """View to run arbitrary RouterOS commands on a device."""
+    if request.method == 'POST':
+        device_id = request.POST.get('device_id')
+        command = request.POST.get('command')
+        if not device_id or not command:
+            messages.error(request, "Device and command are required.")
+            return redirect('wifi:execute_command')
+        device = MikroTikDevice.objects.get(id=device_id)
+        mgr = RemoteMikroTikManager(device=device)
+        result = mgr.execute_raw_command(command)
+        context = {
+            'device': device,
+            'command': command,
+            'result': result,
+        }
+        return render(request, 'wifi/admin/command_result.html', context)
+    else:
+        devices = MikroTikDevice.objects.filter(is_active=True)
+        context = {'devices': devices}
+        return render(request, 'wifi/admin/execute_command.html', context)
+
+
+from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Branch, MikroTikDevice
+from .services.mikrotik import RemoteMikroTikManager
+from django.http import JsonResponse
+
+@staff_member_required
+def branch_add(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        address = request.POST.get('address')
+        contact_person = request.POST.get('contact_person')
+        contact_phone = request.POST.get('contact_phone')
+        if name:
+            Branch.objects.create(
+                name=name,
+                address=address,
+                contact_person=contact_person,
+                contact_phone=contact_phone
+            )
+            messages.success(request, f'Branch "{name}" created successfully.')
+            return redirect('admin:app_list', app_label='wifi')
+        else:
+            messages.error(request, 'Branch name is required.')
+    return render(request, 'wifi/admin/add_branch.html')
+
+@staff_member_required
+def remote_troubleshoot(request):
+    devices = MikroTikDevice.objects.filter(is_active=True).select_related('branch')
+    context = {'devices': devices}
+    if request.method == 'POST':
+        device_id = request.POST.get('device_id')
+        command = request.POST.get('command')
+        if device_id and command:
+            device = MikroTikDevice.objects.get(id=device_id)
+            mgr = RemoteMikroTikManager(device=device)
+            result = mgr.execute_raw_command(command)
+            context.update({
+                'selected_device': int(device_id),
+                'command': command,
+                'result': result,
+            })
+    return render(request, 'wifi/admin/remote_troubleshoot.html', context)
+
+@staff_member_required
+def device_info_api(request, device_id):
+    device = MikroTikDevice.objects.get(id=device_id)
+    mgr = RemoteMikroTikManager(device=device)
+    data = {'id': device.id, 'name': device.name}
+    if mgr.connect():
+        data['system_info'] = mgr.get_system_info()
+        mgr.disconnect()
+    else:
+        data['system_info'] = None
+    return JsonResponse(data)
+
+
+
+@staff_member_required
+def admin_branches(request):
+    """Display a list of all branches with actions."""
+    branches = Branch.objects.all().order_by('name')
+    context = {'branches': branches}
+    return render(request, 'wifi/admin/branches.html', context)
+
+
+
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
+from .models import Branch
+
+@staff_member_required
+def branch_edit(request, pk):
+    branch = get_object_or_404(Branch, pk=pk)
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        address = request.POST.get('address')
+        contact_person = request.POST.get('contact_person')
+        contact_phone = request.POST.get('contact_phone')
+        if name:
+            branch.name = name
+            branch.address = address
+            branch.contact_person = contact_person
+            branch.contact_phone = contact_phone
+            branch.save()
+            messages.success(request, f'Branch "{name}" updated successfully.')
+            return redirect('wifi:admin_branches')
+        else:
+            messages.error(request, 'Branch name is required.')
+    context = {'branch': branch}
+    return render(request, 'wifi/admin/branch_form.html', context)
+
+@staff_member_required
+def branch_delete(request, pk):
+    branch = get_object_or_404(Branch, pk=pk)
+    if request.method == 'POST':
+        branch_name = branch.name
+        branch.delete()
+        messages.success(request, f'Branch "{branch_name}" deleted successfully.')
+        return redirect('wifi:admin_branches')
+    context = {'branch': branch}
+    return render(request, 'wifi/admin/branch_confirm_delete.html', context)
+
+from .models import Branch, MikroTikDevice
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.contrib.admin.views.decorators import staff_member_required
+
+@staff_member_required
+def device_add(request):
+    """Add a new MikroTik device."""
+    branches = Branch.objects.all().order_by('name')
+    
+    if request.method == 'POST':
+        branch_id = request.POST.get('branch')
+        name = request.POST.get('name')
+        ip_address = request.POST.get('ip_address')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        api_port = request.POST.get('api_port', 8728)
+        use_ssl = request.POST.get('use_ssl') == 'on'
+        is_active = request.POST.get('is_active') == 'on'
+        
+        # Validation
+        errors = []
+        if not branch_id:
+            errors.append("Branch is required.")
+        if not name:
+            errors.append("Device name is required.")
+        if not ip_address:
+            errors.append("IP address is required.")
+        if not username:
+            errors.append("Username is required.")
+        if not password:
+            errors.append("Password is required.")
+        
+        if errors:
+            for error in errors:
+                messages.error(request, error)
+        else:
+            try:
+                branch = Branch.objects.get(id=branch_id)
+                device = MikroTikDevice(
+                    branch=branch,
+                    name=name,
+                    ip_address=ip_address,
+                    username=username,
+                    password=password,  # Will be encrypted via setter
+                    api_port=int(api_port),
+                    use_ssl=use_ssl,
+                    is_active=is_active,
+                )
+                device.save()
+                
+                # Test connection after adding
+                from .services.mikrotik import RemoteMikroTikManager
+                mgr = RemoteMikroTikManager(device=device)
+                if mgr.test_connectivity():
+                    messages.success(request, f'Device "{name}" added and connected successfully!')
+                else:
+                    messages.warning(request, f'Device "{name}" added but could not connect. Please check credentials and network.')
+                
+                return redirect('wifi:admin_devices')  # We'll create this list view next
+            
+            except Branch.DoesNotExist:
+                messages.error(request, "Selected branch does not exist.")
+            except Exception as e:
+                messages.error(request, f"Error adding device: {str(e)}")
+    
+    context = {
+        'branches': branches,
+    }
+    return render(request, 'wifi/admin/device_add.html', context)
+
+
+@staff_member_required
+def admin_devices(request):
+    """List all MikroTik devices."""
+    devices = MikroTikDevice.objects.all().select_related('branch').order_by('branch__name', 'name')
+    context = {'devices': devices}
+    return render(request, 'wifi/admin/devices.html', context)
+
+
+
+from .models import DeviceMetric, MikroTikDevice
+from django.db.models import Avg, Max, Min
+from django.utils import timezone
+from datetime import timedelta
+
+@staff_member_required
+def device_metrics(request):
+    devices = MikroTikDevice.objects.filter(is_active=True)
+    device_id = request.GET.get('device')
+    selected_device = None
+    if device_id:
+        selected_device = MikroTikDevice.objects.filter(id=device_id).first()
+    if not selected_device and devices.exists():
+        selected_device = devices.first()
+    
+    metrics_data = None
+    if selected_device:
+        # Get metrics for the last 24 hours
+        since = timezone.now() - timedelta(hours=24)
+        qs = DeviceMetric.objects.filter(device=selected_device, timestamp__gte=since).order_by('timestamp')
+        # Prepare data for charts
+        timestamps = [m.timestamp.strftime('%H:%M') for m in qs]
+        active_users = [m.active_users for m in qs]
+        cpu_load = [m.cpu_load for m in qs]
+        # Compute throughput rates (bits per second) from rx_byte / tx_byte differences
+        # Since we store only the latest byte count, we cannot compute rate without previous.
+        # We need to store rx_byte and tx_byte in the model. Let's add them.
+        # For now, we'll use rx_rate/tx_rate if we had them. Let's extend the model.
+        # I'll add fields in next step.
+        # We'll compute rates by storing previous values in a dict.
+        rx_rates = []
+        tx_rates = []
+        prev_time = None
+        prev_rx = None
+        prev_tx = None
+        for m in qs:
+            # We need rx_byte/tx_byte. Let's add those fields to DeviceMetric.
+            pass
+        # For now, we'll pass empty.
+        metrics_data = {
+            'labels': timestamps,
+            'active_users': active_users,
+            'cpu_load': cpu_load,
+            'rx_rates': rx_rates,
+            'tx_rates': tx_rates,
+        }
+    
+    context = {
+        'devices': devices,
+        'selected_device': selected_device,
+        'metrics': metrics_data,
+    }
+    return render(request, 'wifi/admin/device_metrics.html', context)
+
+from .models import DeviceMetric, MikroTikDevice
+from django.db.models import Avg, Max, Min
+from django.utils import timezone
+from datetime import timedelta
+
+@staff_member_required
+def device_metrics(request):
+    devices = MikroTikDevice.objects.filter(is_active=True)
+    device_id = request.GET.get('device')
+    selected_device = None
+    if device_id:
+        selected_device = MikroTikDevice.objects.filter(id=device_id).first()
+    if not selected_device and devices.exists():
+        selected_device = devices.first()
+    
+    metrics_data = None
+    if selected_device:
+        # Get metrics for the last 24 hours
+        since = timezone.now() - timedelta(hours=24)
+        qs = DeviceMetric.objects.filter(device=selected_device, timestamp__gte=since).order_by('timestamp')
+        if qs.exists():
+            # Prepare data for charts
+            timestamps = [m.timestamp.strftime('%H:%M') for m in qs]
+            active_users = [m.active_users for m in qs]
+            cpu_load = [m.cpu_load for m in qs]
+            
+            # Compute throughput rates (bits per second) from rx_byte / tx_byte differences
+            rx_rates = []
+            tx_rates = []
+            prev_time = None
+            prev_rx = None
+            prev_tx = None
+            for m in qs:
+                if prev_time and prev_rx is not None:
+                    delta_sec = (m.timestamp - prev_time).total_seconds()
+                    if delta_sec > 0:
+                        rx_rate = (m.rx_byte - prev_rx) * 8 / delta_sec  # bits per second
+                        tx_rate = (m.tx_byte - prev_tx) * 8 / delta_sec
+                    else:
+                        rx_rate = 0
+                        tx_rate = 0
+                    rx_rates.append(round(rx_rate, 0))
+                    tx_rates.append(round(tx_rate, 0))
+                else:
+                    rx_rates.append(0)
+                    tx_rates.append(0)
+                prev_time = m.timestamp
+                prev_rx = m.rx_byte
+                prev_tx = m.tx_byte
+            
+            metrics_data = {
+                'labels': timestamps,
+                'active_users': active_users,
+                'cpu_load': cpu_load,
+                'rx_rates': rx_rates,
+                'tx_rates': tx_rates,
+            }
+        else:
+            # No metrics yet – show placeholder
+            metrics_data = {
+                'labels': [],
+                'active_users': [],
+                'cpu_load': [],
+                'rx_rates': [],
+                'tx_rates': [],
+            }
+    
+    context = {
+        'devices': devices,
+        'selected_device': selected_device,
+        'metrics': metrics_data,
+    }
+    return render(request, 'wifi/admin/device_metrics.html', context)
+
+
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
+from .models import Branch, MikroTikDevice
+
+@staff_member_required
+def device_edit(request, pk):
+    device = get_object_or_404(MikroTikDevice, pk=pk)
+    branches = Branch.objects.all().order_by('name')
+    
+    if request.method == 'POST':
+        branch_id = request.POST.get('branch')
+        name = request.POST.get('name')
+        ip_address = request.POST.get('ip_address')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        api_port = request.POST.get('api_port', 8728)
+        use_ssl = request.POST.get('use_ssl') == 'on'
+        is_active = request.POST.get('is_active') == 'on'
+        
+        # Validation
+        errors = []
+        if not branch_id:
+            errors.append("Branch is required.")
+        if not name:
+            errors.append("Device name is required.")
+        if not ip_address:
+            errors.append("IP address is required.")
+        if not username:
+            errors.append("Username is required.")
+        
+        if errors:
+            for error in errors:
+                messages.error(request, error)
+        else:
+            try:
+                branch = Branch.objects.get(id=branch_id)
+                device.branch = branch
+                device.name = name
+                device.ip_address = ip_address
+                device.username = username
+                if password:  # Only update password if provided
+                    device.password = password
+                device.api_port = int(api_port)
+                device.use_ssl = use_ssl
+                device.is_active = is_active
+                device.save()
+                messages.success(request, f'Device "{name}" updated successfully.')
+                return redirect('wifi:admin_devices')
+            except Branch.DoesNotExist:
+                messages.error(request, "Selected branch does not exist.")
+            except Exception as e:
+                messages.error(request, f"Error updating device: {str(e)}")
+    
+    context = {
+        'device': device,
+        'branches': branches,
+    }
+    return render(request, 'wifi/admin/device_form.html', context)
+
+
+@staff_member_required
+def device_delete(request, pk):
+    device = get_object_or_404(MikroTikDevice, pk=pk)
+    if request.method == 'POST':
+        device_name = device.name
+        device.delete()
+        messages.success(request, f'Device "{device_name}" deleted successfully.')
+        return redirect('wifi:admin_devices')
+    context = {'device': device}
+    return render(request, 'wifi/admin/device_confirm_delete.html', context)

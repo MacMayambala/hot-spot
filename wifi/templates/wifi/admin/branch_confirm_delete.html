@@ -1,0 +1,27 @@
+{% extends 'wifi/base.html' %}
+{% load static %}
+{% block title %}Delete Branch – MAC Technologies{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold" style="color: var(--brand-blue);"><i class="bi bi-trash me-2"></i>Delete Branch</h2>
+    <a href="{% url 'wifi:admin_branches' %}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left me-1"></i> Back to Branches
+    </a>
+</div>
+
+<div class="wifi-card">
+    <div class="alert alert-danger">
+        <i class="bi bi-exclamation-triangle me-2"></i>
+        Are you sure you want to delete the branch <strong>"{{ branch.name }}"</strong>?
+        <br><small>This action cannot be undone.</small>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">
+            <i class="bi bi-trash me-1"></i> Yes, delete
+        </button>
+        <a href="{% url 'wifi:admin_branches' %}" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

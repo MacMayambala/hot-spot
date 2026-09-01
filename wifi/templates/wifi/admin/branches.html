@@ -1,0 +1,55 @@
+{% extends 'wifi/base.html' %}
+{% load static %}
+{% block title %}Branches – MAC Technologies{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold" style="color: var(--brand-blue);"><i class="bi bi-diagram-3 me-2"></i>Branches</h2>
+    <a href="{% url 'wifi:branch_add' %}" class="btn btn-primary btn-sm">
+        <i class="bi bi-plus-circle me-1"></i> Add Branch
+    </a>
+</div>
+
+<!-- Sub-Navigation -->
+{% include 'wifi/admin/_nav.html' %}
+
+<div class="wifi-card">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Contact Person</th>
+                    <th>Phone</th>
+                    <th>Devices</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for branch in branches %}
+                <tr>
+                    <td><strong>{{ branch.name }}</strong></td>
+                    <td>{{ branch.address|default:"—" }}</td>
+                    <td>{{ branch.contact_person|default:"—" }}</td>
+                    <td>{{ branch.contact_phone|default:"—" }}</td>
+                    <td>{{ branch.devices.count }}</td>
+                    <td>
+                        <!-- Custom edit link -->
+                        <a href="{% url 'wifi:branch_edit' branch.id %}" class="btn btn-sm btn-outline-secondary" title="Edit">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <!-- Custom delete link -->
+                        <a href="{% url 'wifi:branch_delete' branch.id %}" class="btn btn-sm btn-outline-danger" title="Delete">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" class="text-center text-muted">No branches created yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

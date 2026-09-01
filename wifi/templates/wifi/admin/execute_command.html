@@ -1,0 +1,18 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h2>Execute Remote Command</h2>
+<form method="post">
+    {% csrf_token %}
+    <label for="device_id">Select Device:</label>
+    <select name="device_id" id="device_id">
+        {% for device in devices %}
+        <option value="{{ device.id }}">{{ device.name }} ({{ device.branch.name }})</option>
+        {% endfor %}
+    </select>
+    <br><br>
+    <label for="command">Command (e.g., /ip/address/print):</label>
+    <input type="text" name="command" id="command" size="50" value="/ip/address/print">
+    <br><br>
+    <input type="submit" value="Execute">
+</form>
+{% endblock %}

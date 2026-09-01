@@ -1,0 +1,96 @@
+{% extends 'wifi/base.html' %}
+{% load static %}
+{% block title %}Add MikroTik Device – MAC Technologies{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold" style="color: var(--brand-blue);"><i class="bi bi-router me-2"></i>Add MikroTik Device</h2>
+    <a href="{% url 'wifi:admin_devices' %}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left me-1"></i> Back to Devices
+    </a>
+</div>
+
+<!-- Sub-Navigation -->
+{% include 'wifi/admin/_nav.html' %}
+
+<div class="wifi-card">
+    <form method="post">
+        {% csrf_token %}
+        <div class="row g-4">
+            <!-- Branch Selection -->
+            <div class="col-md-6">
+                <label for="branch" class="form-label fw-bold">Branch *</label>
+                <select class="form-select" id="branch" name="branch" required>
+                    <option value="">— Select Branch —</option>
+                    {% for branch in branches %}
+                        <option value="{{ branch.id }}">{{ branch.name }}</option>
+                    {% empty %}
+                        <option value="">No branches available. Please create a branch first.</option>
+                    {% endfor %}
+                </select>
+                <small class="text-muted">Select the branch where this router is located.</small>
+            </div>
+
+            <!-- Device Name -->
+            <div class="col-md-6">
+                <label for="name" class="form-label fw-bold">Device Name *</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="e.g., Main Router - Kampala" required>
+                <small class="text-muted">Give this device a recognizable name.</small>
+            </div>
+
+            <!-- IP Address -->
+            <div class="col-md-6">
+                <label for="ip_address" class="form-label fw-bold">IP Address / Hostname *</label>
+                <input type="text" class="form-control" id="ip_address" name="ip_address" placeholder="192.168.1.1 or router.ddns.net" required>
+                <small class="text-muted">Public IP or DDNS hostname of the MikroTik router.</small>
+            </div>
+
+            <!-- API Port -->
+            <div class="col-md-3">
+                <label for="api_port" class="form-label fw-bold">API Port</label>
+                <input type="number" class="form-control" id="api_port" name="api_port" value="8728">
+                <small class="text-muted">Default: 8728 (HTTP) or 8729 (HTTPS).</small>
+            </div>
+
+            <!-- Use SSL -->
+            <div class="col-md-3 d-flex align-items-center">
+                <div class="form-check mt-4">
+                    <input type="checkbox" class="form-check-input" id="use_ssl" name="use_ssl">
+                    <label class="form-check-label fw-bold" for="use_ssl">Use SSL</label>
+                    <br><small class="text-muted">Enable for API-SSL (port 8729).</small>
+                </div>
+            </div>
+
+            <!-- Username -->
+            <div class="col-md-6">
+                <label for="username" class="form-label fw-bold">API Username *</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="api_remote" required>
+                <small class="text-muted">API user created on the MikroTik router.</small>
+            </div>
+
+            <!-- Password -->
+            <div class="col-md-6">
+                <label for="password" class="form-label fw-bold">API Password *</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+                <small class="text-muted">The password will be encrypted before saving.</small>
+            </div>
+
+            <!-- Active Status -->
+            <div class="col-12">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="is_active" name="is_active" checked>
+                    <label class="form-check-label fw-bold" for="is_active">Active</label>
+                    <br><small class="text-muted">Uncheck to temporarily disable this device.</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-1"></i> Add Device
+            </button>
+            <a href="{% url 'wifi:admin_devices' %}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

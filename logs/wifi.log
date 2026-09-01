@@ -994,3 +994,721 @@ Watching for file changes with StatReloader
 Watching for file changes with StatReloader
 /home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py changed, reloading.
 Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /wifi/admin/dashboard/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 320, in admin_dashboard
+    return render(request, 'wifi/admin/dashboard.html', context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'wifi_branch_add' not found. 'wifi_branch_add' is not a valid view function or pattern name.
+Not Found: /favicon.ico
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/admin.py changed, reloading.
+Watching for file changes with StatReloader
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/admin.py changed, reloading.
+Watching for file changes with StatReloader
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/admin.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /wifi/admin/dashboard/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 320, in admin_dashboard
+    return render(request, 'wifi/admin/dashboard.html', context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 211, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 176, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'wifi_branch_changelist' not found. 'wifi_branch_changelist' is not a valid view function or pattern name.
+Internal Server Error: /wifi/admin/mikrotik-status/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 613, in mikrotik_status
+    return render(request, 'wifi/admin/mikrotik_status.html', context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'execute_command' not found. 'execute_command' is not a valid view function or pattern name.
+Internal Server Error: /wifi/admin/mikrotik-status/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 613, in mikrotik_status
+    return render(request, 'wifi/admin/mikrotik_status.html', context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'execute_command' not found. 'execute_command' is not a valid view function or pattern name.
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /wifi/admin/branches/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 722, in admin_branches
+    return render(request, 'wifi/admin/branches.html', context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/defaulttags.py", line 249, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'wifi_branch_change' not found. 'wifi_branch_change' is not a valid view function or pattern name.
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /wifi/admin/mikrotik-status/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 613, in mikrotik_status
+    return render(request, 'wifi/admin/mikrotik_status.html', context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'execute_command' not found. 'execute_command' is not a valid view function or pattern name.
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/urls.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /wifi/admin/dashboard/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 320, in admin_dashboard
+    return render(request, 'wifi/admin/dashboard.html', context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 211, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 176, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'admin_devices' not found. 'admin_devices' is not a valid view function or pattern name.
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/urls.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /wifi/admin/dashboard/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 320, in admin_dashboard
+    return render(request, 'wifi/admin/dashboard.html', context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 211, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 176, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'device_metrics' not found. 'device_metrics' is not a valid view function or pattern name.
+Internal Server Error: /wifi/admin/dashboard/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 320, in admin_dashboard
+    return render(request, 'wifi/admin/dashboard.html', context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 211, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 176, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'device_metrics' not found. 'device_metrics' is not a valid view function or pattern name.
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/home/mac/whoweare/wifi/wifi_hotspot/wifi_hotspot/settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Port 8728 not reachable on 192.168.126.206
+Internal Server Error: /wifi/admin/devices/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py", line 839, in admin_devices
+    return render(request, 'wifi/admin/devices.html', context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/shortcuts.py", line 27, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1107, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/defaulttags.py", line 249, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/base.py", line 1068, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/template/defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/urls/resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'wifi_mikrotikdevice_change' not found. 'wifi_mikrotikdevice_change' is not a valid view function or pattern name.
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/urls.py changed, reloading.
+Watching for file changes with StatReloader
+Port 8728 not reachable on 192.168.126.206
+Port 8728 not reachable on 192.168.126.206
+Port 8728 not reachable on 192.168.126.206
+Port 8728 not reachable on 192.168.126.206
+Port 8728 not reachable on 192.168.126.206
+Port 8728 not reachable on 192.168.126.206
+Port 8728 not reachable on 192.168.126.206
+Port 8728 not reachable on 192.168.126.206
+Port 8728 not reachable on 192.168.126.206
+Port 8728 not reachable on 192.168.126.206

@@ -1,0 +1,64 @@
+{% extends 'wifi/base.html' %}
+{% load static %}
+{% block title %}MikroTik Devices – MAC Technologies{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold" style="color: var(--brand-blue);"><i class="bi bi-router me-2"></i>MikroTik Devices</h2>
+    <a href="{% url 'wifi:device_add' %}" class="btn btn-primary btn-sm">
+        <i class="bi bi-plus-circle me-1"></i> Add Device
+    </a>
+</div>
+
+<!-- Sub-Navigation -->
+{% include 'wifi/admin/_nav.html' %}
+
+<div class="wifi-card">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Branch</th>
+                    <th>IP Address</th>
+                    <th>Username</th>
+                    <th>Port</th>
+                    <th>Status</th>
+                    <th>Last Check</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for device in devices %}
+                <tr>
+                    <td><strong>{{ device.name }}</strong></td>
+                    <td>{{ device.branch.name }}</td>
+                    <td>{{ device.ip_address }}</td>
+                    <td>{{ device.username }}</td>
+                    <td>{{ device.api_port }}</td>
+                    <td>
+                        {% if device.last_connection_status %}
+                            <span class="badge bg-success">Online</span>
+                        {% else %}
+                            <span class="badge bg-danger">Offline</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ device.last_check|default:"Never"|date:"Y-m-d H:i" }}</td>
+                    <td>
+                        <!-- Custom edit and delete links -->
+                        <a href="{% url 'wifi:device_edit' device.id %}" class="btn btn-sm btn-outline-secondary" title="Edit">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'wifi:device_delete' device.id %}" class="btn btn-sm btn-outline-danger" title="Delete">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="8" class="text-center text-muted">No devices configured yet. Add your first MikroTik device.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

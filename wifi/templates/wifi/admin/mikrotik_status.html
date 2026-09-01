@@ -1,0 +1,48 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block content %}
+<h2>MikroTik Devices Status</h2>
+<p>Total active devices: {{ total_devices }}</p>
+<table class="table" style="width:100%; border-collapse: collapse;">
+    <thead>
+        <tr style="background:#f5f5f5;">
+            <th style="padding:8px; border:1px solid #ddd;">Device</th>
+            <th style="padding:8px; border:1px solid #ddd;">Branch</th>
+            <th style="padding:8px; border:1px solid #ddd;">IP</th>
+            <th style="padding:8px; border:1px solid #ddd;">Status</th>
+            <th style="padding:8px; border:1px solid #ddd;">System Info</th>
+            <th style="padding:8px; border:1px solid #ddd;">Active Users</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in status_list %}
+        <tr>
+            <td style="padding:8px; border:1px solid #ddd;">{{ item.device.name }}</td>
+            <td style="padding:8px; border:1px solid #ddd;">{{ item.device.branch.name }}</td>
+            <td style="padding:8px; border:1px solid #ddd;">{{ item.device.ip_address }}</td>
+            <td style="padding:8px; border:1px solid #ddd;">
+                {% if item.reachable %}
+                    <span style="color:green;">✓ Online</span>
+                {% else %}
+                    <span style="color:red;">✗ Offline</span>
+                {% endif %}
+            </td>
+            <td style="padding:8px; border:1px solid #ddd;">
+                {% if item.system_info %}
+                    Version: {{ item.system_info.0.version }}<br>
+                    Uptime: {{ item.system_info.0.uptime }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
+            <td style="padding:8px; border:1px solid #ddd;">{{ item.active_users|length }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6" style="padding:8px; border:1px solid #ddd; text-align:center;">No active devices configured.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<!-- FIXED: Added wifi namespace -->
+<a href="{% url 'wifi:execute_command' %}" class="button" style="display:inline-block; background:#1632af; color:white; padding:8px 16px; text-decoration:none; border-radius:4px; margin-top:10px;">Execute Remote Command</a>
+{% endblock %}

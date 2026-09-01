@@ -11,3 +11,5 @@ admin.site.register(WifiPayment)
 admin.site.register(WifiSubscription)
 admin.site.register(WifiSession)
 admin.site.register(AdminAuditLog)
+
+

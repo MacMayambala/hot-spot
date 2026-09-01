@@ -140,3 +140,89 @@ class AdminAuditLog(models.Model):
 
     def __str__(self):
         return f"{self.admin_user} - {self.action} at {self.timestamp}"
+    
+
+
+# wifi/models.py (add these)
+
+# wifi/models.py
+from django.db import models
+from cryptography.fernet import Fernet
+from django.conf import settings
+
+# Helper for encryption (you can put this in a separate utils.py)
+from django.conf import settings
+
+def encrypt_password(password):
+    return settings.CIPHER.encrypt(password.encode()).decode()
+
+def decrypt_password(encrypted):
+    return settings.CIPHER.decrypt(encrypted.encode()).decode()
+class Branch(models.Model):
+    name = models.CharField(max_length=100)
+    address = models.TextField(blank=True)
+    contact_person = models.CharField(max_length=100, blank=True)
+    contact_phone = models.CharField(max_length=20, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+
+
+class MikroTikDevice(models.Model):
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE, related_name='devices')
+    name = models.CharField(max_length=100, help_text="e.g., Main Router - Kampala")
+    ip_address = models.GenericIPAddressField()
+    username = models.CharField(max_length=50)
+    _password = models.CharField(max_length=255, db_column='password', help_text="Encrypted password")
+    api_port = models.IntegerField(default=8728)
+    use_ssl = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    last_connection_status = models.BooleanField(default=False, help_text="Last health check result")
+    last_check = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['branch', 'name']
+
+    def __str__(self):
+        return f"{self.name} ({self.branch.name})"
+
+    @property
+    def password(self):
+        return decrypt_password(self._password)
+
+    @password.setter
+    def password(self, raw_password):
+        self._password = encrypt_password(raw_password)
+
+    def test_connection(self):
+        """Quick connectivity test using librouteros"""
+        from .services.mikrotik import RemoteMikroTikManager
+        mgr = RemoteMikroTikManager(device=self)
+        return mgr.test_connectivity()
+    
+
+
+class DeviceMetric(models.Model):
+    device = models.ForeignKey(MikroTikDevice, on_delete=models.CASCADE, related_name='metrics')
+    timestamp = models.DateTimeField(auto_now_add=True)
+    active_users = models.IntegerField(default=0)
+    cpu_load = models.FloatField(default=0.0)
+    free_memory = models.BigIntegerField(default=0)
+    total_memory = models.BigIntegerField(default=0)
+    uptime = models.CharField(max_length=50, blank=True)
+    # Throughput (bits per second) – we’ll store rx/tx rates
+    rx_rate = models.FloatField(default=0.0)  # bps
+    tx_rate = models.FloatField(default=0.0)  # bps
+    rx_byte = models.BigIntegerField(default=0)
+    tx_byte = models.BigIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['-timestamp']
+        indexes = [models.Index(fields=['device', 'timestamp'])]

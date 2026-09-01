@@ -14,7 +14,23 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+
 load_dotenv()
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+from cryptography.fernet import Fernet
+
+load_dotenv()
+
+# Encryption key
+ENCRYPTION_KEY = os.environ.get('ENCRYPTION_KEY')
+if not ENCRYPTION_KEY:
+    raise ValueError("ENCRYPTION_KEY must be set in the environment")
+
+# Use UPPERCASE so Django includes it as a setting
+CIPHER = Fernet(ENCRYPTION_KEY.encode())
+# -------------------------------------------------------
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

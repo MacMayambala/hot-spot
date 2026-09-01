@@ -1,19 +1,55 @@
 <nav class="mb-4">
     <div class="d-flex flex-wrap gap-2">
+        <!-- Dashboard -->
         <a href="{% url 'wifi:admin_dashboard' %}" class="btn btn-outline-primary btn-sm {% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}">
             <i class="bi bi-speedometer2 me-1"></i> Dashboard
         </a>
+        <!-- Packages -->
         <a href="{% url 'wifi:admin_packages' %}" class="btn btn-outline-primary btn-sm {% if 'packages' in request.path %}active{% endif %}">
             <i class="bi bi-boxes me-1"></i> Packages
         </a>
+        <!-- Customers -->
         <a href="{% url 'wifi:admin_customers' %}" class="btn btn-outline-primary btn-sm {% if 'customers' in request.path %}active{% endif %}">
             <i class="bi bi-people me-1"></i> Customers
         </a>
+        <!-- Payments -->
         <a href="{% url 'wifi:admin_payments' %}" class="btn btn-outline-primary btn-sm {% if 'payments' in request.path %}active{% endif %}">
             <i class="bi bi-credit-card me-1"></i> Payments
         </a>
+        <!-- Branches (custom view) -->
+        <a href="{% url 'wifi:admin_branches' %}" class="btn btn-outline-primary btn-sm {% if 'branches' in request.path %}active{% endif %}">
+            <i class="bi bi-diagram-3 me-1"></i> Branches
+        </a>
+        <!-- Add Branch -->
+        <a href="{% url 'wifi:branch_add' %}" class="btn btn-outline-primary btn-sm {% if request.resolver_match.url_name == 'branch_add' %}active{% endif %}">
+            <i class="bi bi-plus-circle me-1"></i> Add Branch
+        </a>
+        <!-- Devices (NEW) -->
+        <a href="{% url 'wifi:admin_devices' %}" class="btn btn-outline-primary btn-sm {% if 'devices' in request.path %}active{% endif %}">
+            <i class="bi bi-router me-1"></i> Devices
+        </a>
+        <!-- Add Device (NEW) -->
+        <a href="{% url 'wifi:device_add' %}" class="btn btn-outline-primary btn-sm {% if request.resolver_match.url_name == 'device_add' %}active{% endif %}">
+            <i class="bi bi-plus-circle me-1"></i> Add Device
+        </a>
+        <!-- MikroTik Status -->
+        <a href="{% url 'wifi:mikrotik_status' %}" class="btn btn-outline-primary btn-sm {% if request.resolver_match.url_name == 'mikrotik_status' %}active{% endif %}">
+            <i class="bi bi-activity me-1"></i> MikroTik Status
+        </a>
+        <!-- Remote Command -->
+        <a href="{% url 'wifi:execute_command' %}" class="btn btn-outline-primary btn-sm {% if request.resolver_match.url_name == 'execute_command' %}active{% endif %}">
+            <i class="bi bi-terminal me-1"></i> Remote Command
+        </a>
+        <a href="{% url 'wifi:device_metrics' %}" class="btn btn-outline-primary btn-sm {% if request.resolver_match.url_name == 'device_metrics' %}active{% endif %}">
+            <i class="bi bi-graph-up me-1"></i> Metrics
+        </a>
+        <!-- Troubleshoot -->
+        <a href="{% url 'wifi:remote_troubleshoot' %}" class="btn btn-outline-primary btn-sm {% if request.resolver_match.url_name == 'remote_troubleshoot' %}active{% endif %}">
+            <i class="bi bi-tools me-1"></i> Troubleshoot
+        </a>
+        <!-- Conditional Export CSV (only on payments page) -->
         {% if request.resolver_match.url_name == 'admin_payments' %}
-        <a href="{% url 'wifi:admin_payments_export' %}" class="btn btn-success btn-sm">
+        <a href="{% url 'wifi:admin_payments_export' %}" class="btn btn-outline-success btn-sm">
             <i class="bi bi-download me-1"></i> Export CSV
         </a>
         {% endif %}
@@ -25,5 +61,11 @@
         background: var(--brand-blue);
         color: white;
         border-color: var(--brand-blue);
+    }
+    /* Keep Export CSV as green since it's a special action */
+    .btn-outline-success.active {
+        background: #28a745;
+        color: white;
+        border-color: #28a745;
     }
 </style>

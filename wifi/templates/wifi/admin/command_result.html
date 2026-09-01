@@ -1,0 +1,8 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h2>Command Result</h2>
+<p><strong>Device:</strong> {{ device.name }}</p>
+<p><strong>Command:</strong> {{ command }}</p>
+<pre>{{ result|pprint }}</pre>
+<a href="{% url 'execute_command' %}">Run another command</a>
+{% endblock %}

@@ -11,38 +11,129 @@
 <!-- Sub-Navigation -->
 {% include 'wifi/admin/_nav.html' %}
 
-<!-- Quick Access -->
+<!-- ========================================================== -->
+<!-- 1. Quick Access Cards (all custom views)                   -->
+<!-- ========================================================== -->
 <div class="row g-4 mb-4">
-    <div class="col-md-4 col-6">
+    <!-- Packages -->
+    <div class="col-md-3 col-6">
         <a href="{% url 'wifi:admin_packages' %}" class="text-decoration-none">
             <div class="quick-card">
                 <i class="bi bi-boxes fs-1"></i>
-                <h5 class="mt-2">Manage Packages</h5>
-                <small class="text-muted">Create, edit, toggle packages</small>
+                <h5 class="mt-2">Packages</h5>
+                <small class="text-muted">Manage</small>
             </div>
         </a>
     </div>
-    <div class="col-md-4 col-6">
+    <!-- Customers -->
+    <div class="col-md-3 col-6">
         <a href="{% url 'wifi:admin_customers' %}" class="text-decoration-none">
             <div class="quick-card">
                 <i class="bi bi-people fs-1"></i>
-                <h5 class="mt-2">Manage Customers</h5>
-                <small class="text-muted">View and search customers</small>
+                <h5 class="mt-2">Customers</h5>
+                <small class="text-muted">View & search</small>
             </div>
         </a>
     </div>
-    <div class="col-md-4 col-6">
+    <!-- Payments -->
+    <div class="col-md-3 col-6">
         <a href="{% url 'wifi:admin_payments' %}" class="text-decoration-none">
             <div class="quick-card">
                 <i class="bi bi-credit-card fs-1"></i>
-                <h5 class="mt-2">View Payments</h5>
-                <small class="text-muted">Filter and export payments</small>
+                <h5 class="mt-2">Payments</h5>
+                <small class="text-muted">Filter & export</small>
+            </div>
+        </a>
+    </div>
+    <!-- Branches (custom list, not admin) -->
+    <div class="col-md-3 col-6">
+        <a href="{% url 'wifi:admin_branches' %}" class="text-decoration-none">
+            <div class="quick-card" style="border-color: #17a2b8;">
+                <i class="bi bi-diagram-3 fs-1" style="color: #17a2b8;"></i>
+                <h5 class="mt-2">Branches</h5>
+                <small class="text-muted">View all locations</small>
+            </div>
+        </a>
+    </div>
+    <!-- MikroTik Status -->
+    <div class="col-md-3 col-6">
+        <a href="{% url 'wifi:mikrotik_status' %}" class="text-decoration-none">
+            <div class="quick-card" style="border-color: var(--brand-blue);">
+                <i class="bi bi-router fs-1" style="color: var(--brand-blue);"></i>
+                <h5 class="mt-2">MikroTik Status</h5>
+                <small class="text-muted">View all devices</small>
+            </div>
+        </a>
+    </div>
+    <!-- Remote Command (custom) -->
+    <div class="col-md-3 col-6">
+        <a href="{% url 'wifi:execute_command' %}" class="text-decoration-none">
+            <div class="quick-card" style="border-color: #ff7f00;">
+                <i class="bi bi-terminal fs-1" style="color: #ff7f00;"></i>
+                <h5 class="mt-2">Remote Command</h5>
+                <small class="text-muted">Troubleshoot routers</small>
             </div>
         </a>
     </div>
 </div>
 
-<!-- KPI Cards -->
+<!-- ========================================================== -->
+<!-- 2. MikroTik Device Status Overview                         -->
+<!-- ========================================================== -->
+<div class="row g-4 mb-4">
+    <div class="col-12">
+        <div class="wifi-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold"><i class="bi bi-wifi me-2"></i>MikroTik Devices Status</h5>
+                <a href="{% url 'wifi:mikrotik_status' %}" class="btn btn-sm btn-outline-primary">View all</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Device</th>
+                            <th>Branch</th>
+                            <th>IP</th>
+                            <th>Status</th>
+                            <th>Active Users</th>
+                            <th>Last Check</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in devices_status %}
+                        <tr>
+                            <td>{{ item.device.name }}</td>
+                            <td>{{ item.device.branch.name }}</td>
+                            <td>{{ item.device.ip_address }}</td>
+                            <td>
+                                {% if item.reachable %}
+                                    <span class="badge bg-success">Online</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Offline</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ item.active_users|length }}</td>
+                            <td>{{ item.device.last_check|default:"Never" }}</td>
+                            <td>
+                                <a href="{% url 'wifi:execute_command' %}?device={{ item.device.id }}" class="btn btn-sm btn-outline-secondary" title="Run command">
+                                    <i class="bi bi-terminal"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="7" class="text-center text-muted">No MikroTik devices configured yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================== -->
+<!-- 3. KPI Cards (Revenue, customers, etc.)                    -->
+<!-- ========================================================== -->
 <div class="row g-4 mb-4">
     <div class="col-md-3 col-6">
         <div class="stat-card">
@@ -95,7 +186,9 @@
     </div>
 </div>
 
-<!-- Charts -->
+<!-- ========================================================== -->
+<!-- 4. Charts (revenue & provider)                            -->
+<!-- ========================================================== -->
 <div class="row g-4">
     <div class="col-lg-7">
         <div class="wifi-card">
@@ -111,6 +204,9 @@
     </div>
 </div>
 
+<!-- ========================================================== -->
+<!-- 5. Popular Packages                                        -->
+<!-- ========================================================== -->
 <div class="row mt-4">
     <div class="col-12">
         <div class="wifi-card">
@@ -129,6 +225,9 @@
     </div>
 </div>
 
+<!-- ========================================================== -->
+<!-- Styles                                                     -->
+<!-- ========================================================== -->
 <style>
     .stat-card {
         background: white;
@@ -160,9 +259,6 @@
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
-    .list-group-item {
-        border-color: var(--border-color);
-    }
     .quick-card {
         background: white;
         border-radius: 20px;
@@ -172,6 +268,7 @@
         box-shadow: var(--shadow-sm);
         transition: all 0.3s ease;
         color: var(--text-primary);
+        height: 100%;
     }
     .quick-card:hover {
         transform: translateY(-6px);
@@ -181,8 +278,14 @@
     .quick-card i {
         color: var(--brand-blue);
     }
+    .list-group-item {
+        border-color: var(--border-color);
+    }
 </style>
 
+<!-- ========================================================== -->
+<!-- Chart.js scripts                                           -->
+<!-- ========================================================== -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const revenueCtx = document.getElementById('revenueChart').getContext('2d');
