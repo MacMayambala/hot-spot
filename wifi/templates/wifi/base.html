@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}MAC Technologies - WiFi{% endblock %}</title>
     
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="{% static 'wifi/images/favicon.png' %}">
+    
     <!-- Flatpickr CSS & JS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/airbnb.css">
@@ -37,6 +39,25 @@
             color: var(--text-primary);
             letter-spacing: -0.01em;
             min-height: 100vh;
+            background-color: var(--bg);
+        }
+
+        /* Watermark layer – logo now fills the screen */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("{% static 'wifi/images/maclog.png' %}");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain;   /* ← fills the entire viewport while keeping aspect ratio */
+            background-attachment: fixed;
+            opacity: 0.04;              /* subtle watermark – adjust as needed */
+            z-index: -1;
+            pointer-events: none;
         }
 
         .navbar-wifi {
@@ -136,7 +157,7 @@
         }
 
         /* ============================================================
-           CENTERED TOAST MESSAGES – Red for errors, Green for success
+           CENTERED TOAST MESSAGES
            ============================================================ */
         #messageContainer {
             position: fixed;
@@ -199,50 +220,37 @@
             opacity: 1;
             transform: rotate(90deg);
         }
-
-        /* Error Toast – DARK RED (both danger and error tags) */
         #messageContainer .alert-danger,
         #messageContainer .alert-error {
             background: rgba(185, 28, 28, 0.95) !important;
             border-left: 4px solid #fca5a5 !important;
-            color: #fff !important;
         }
         #messageContainer .alert-danger .alert-icon,
         #messageContainer .alert-error .alert-icon {
             color: #fca5a5;
         }
-
-        /* Success Toast – DARK GREEN */
         #messageContainer .alert-success {
             background: rgba(6, 78, 59, 0.95) !important;
             border-left: 4px solid #6ee7b7 !important;
-            color: #fff !important;
         }
         #messageContainer .alert-success .alert-icon {
             color: #6ee7b7;
         }
-
-        /* Warning Toast – DARK ORANGE */
         #messageContainer .alert-warning {
             background: rgba(120, 53, 15, 0.95) !important;
             border-left: 4px solid #fcd34d !important;
-            color: #fff !important;
         }
         #messageContainer .alert-warning .alert-icon {
             color: #fcd34d;
         }
-
-        /* Info Toast – DARK BLUE */
         #messageContainer .alert-info {
             background: rgba(8, 46, 83, 0.95) !important;
             border-left: 4px solid #7dd3fc !important;
-            color: #fff !important;
         }
         #messageContainer .alert-info .alert-icon {
             color: #7dd3fc;
         }
 
-        /* Animations */
         @keyframes toastIn {
             0% { opacity: 0; transform: scale(0.9) translateY(-20px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
@@ -267,6 +275,8 @@
                 <i class="bi bi-wifi"></i>
                 MAC Technologies
                 <span>Hotspot</span>
+                <!-- Uncomment below to use image logo in navbar instead of text -->
+                <!-- <img src="{% static 'wifi/images/maclog.png' %}" alt="MAC Technologies" height="40" style="border-radius: 8px;"> -->
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#wifiNav">
                 <span class="navbar-toggler-icon"></span>
@@ -292,9 +302,7 @@
         </div>
     </nav>
 
-    <!-- ==========================================================
-         CENTERED TOAST MESSAGES – Red for errors, Green for success
-         ========================================================== -->
+    <!-- ===== TOAST MESSAGES ===== -->
     <div id="messageContainer">
         {% if messages %}
             {% for message in messages %}

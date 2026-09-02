@@ -1,4 +1,3 @@
-
 # wifi/services/mikrotik.py
 import logging
 import socket
@@ -8,17 +7,14 @@ from librouteros import connect
 from librouteros.exceptions import TrapError
 from django.conf import settings
 
-
 logger = logging.getLogger(__name__)
 
-# ---------- Existing single‑router functions ----------
 def get_connection():
     return connect(
         host=settings.MIKROTIK_HOST,
         port=settings.MIKROTIK_PORT,
         username=settings.MIKROTIK_USERNAME,
         password=settings.MIKROTIK_PASSWORD,
-        use_ssl=settings.MIKROTIK_USE_SSL,          # changed ssl→use_ssl
     )
 
 def create_hotspot_user(username, password, profile=None):
@@ -94,23 +90,58 @@ def get_active_sessions():
         logger.error(f"Failed to get active sessions: {e}")
         return []
 
-# ---------- New Remote Manager for multiple routers ----------
+# ---------- NEW FUNCTIONS FOR MAC AUTH ----------
+def update_user_mac(username, mac_address):
+    """Update the MAC address of an existing hotspot user."""
+    api = get_connection()
+    try:
+        api.path('/ip/hotspot/user').update(
+            where={'name': username},
+            mac_address=mac_address
+        )
+        logger.info(f"MAC {mac_address} set for user {username}")
+        return True
+    except TrapError as e:
+        logger.error(f"Failed to set MAC for {username}: {e}")
+        return False
+
+def ensure_hotspot_user_exists(username, password, profile='default', expires_at=None):
+    """
+    Ensure a hotspot user exists and is active.
+    If the user doesn't exist, create it.
+    If it exists but is disabled, enable it.
+    """
+    api = get_connection()
+    try:
+        users = api.path('/ip/hotspot/user').where({'name': username})
+        if not users:
+            create_hotspot_user(username, password, profile)
+            if expires_at:
+                set_user_expiry(username, expires_at)
+            activate_hotspot_user(username)
+            logger.info(f"Re‑created hotspot user {username}")
+        else:
+            activate_hotspot_user(username)
+            if expires_at:
+                set_user_expiry(username, expires_at)
+            logger.info(f"Hotspot user {username} already exists, activated")
+        return True
+    except TrapError as e:
+        logger.error(f"Error ensuring hotspot user {username}: {e}")
+        return False
+
+# ---------- REMOTE MANAGER (with MAC support) ----------
 class RemoteMikroTikManager:
-    """
-    Handles connections and operations for a single remote MikroTik device.
-    Uses the device configuration stored in the MikroTikDevice model.
-    """
     def __init__(self, device=None, host=None, port=None, user=None, password=None, use_ssl=False):
         if device:
             self.config = {
                 'host': device.ip_address,
                 'port': device.api_port,
                 'user': device.username,
-                'password': device.password,   # already decrypted via property
+                'password': device.password,
                 'use_ssl': device.use_ssl,
             }
         else:
-            # Fallback to settings (for backwards compatibility)
             self.config = {
                 'host': host or settings.MIKROTIK_HOST,
                 'port': port or settings.MIKROTIK_PORT,
@@ -123,11 +154,9 @@ class RemoteMikroTikManager:
         self.connection_timeout = 15
         self.max_retries = 3
         self.retry_delay = 2
-        self._lock = None   # for thread safety, optional
         self.connection_errors = []
 
     def test_connectivity(self):
-        """Test if the router is reachable (TCP port) and API is responsive."""
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(self.connection_timeout)
@@ -136,15 +165,12 @@ class RemoteMikroTikManager:
             if result != 0:
                 logger.error(f"Port {self.config['port']} not reachable on {self.config['host']}")
                 return False
-            # Now try a minimal API command
             api = connect(
                 host=self.config['host'],
                 port=self.config['port'],
                 username=self.config['user'],
                 password=self.config['password'],
-                use_ssl=self.config.get('use_ssl', False),   # changed
             )
-            # Execute a simple read-only command
             api.path('/system/identity').select('name')
             api.close()
             return True
@@ -153,7 +179,6 @@ class RemoteMikroTikManager:
             return False
 
     def connect(self):
-        """Establish connection with retries."""
         for attempt in range(self.max_retries):
             try:
                 self.connection = connect(
@@ -161,13 +186,11 @@ class RemoteMikroTikManager:
                     port=self.config['port'],
                     username=self.config['user'],
                     password=self.config['password'],
-                    use_ssl=self.config.get('use_ssl', False),   # changed
                 )
                 self.api = self.connection
-                # Test with a simple command
                 self.api.path('/system/resource').select('version').first()
                 logger.info(f"Connected to {self.config['host']}")
-                self.connection_errors = []  # clear on success
+                self.connection_errors = []
                 return True
             except Exception as e:
                 error_msg = f"Attempt {attempt+1}: {str(e)}"
@@ -187,10 +210,6 @@ class RemoteMikroTikManager:
             self.api = None
 
     def execute(self, path, command=None, **kwargs):
-        """
-        Execute a command on the router. The path can be a string like '/ip/hotspot/user',
-        and optional commands like .add(), .select(), etc.
-        """
         if not self.api:
             if not self.connect():
                 raise Exception("Could not connect to MikroTik")
@@ -207,7 +226,6 @@ class RemoteMikroTikManager:
                 where = kwargs.pop('where', {})
                 return resource.remove(where=where)
             else:
-                # Default: just get list
                 return resource.get()
         except TrapError as e:
             logger.error(f"TrapError on {path}: {e}")
@@ -216,7 +234,6 @@ class RemoteMikroTikManager:
             logger.error(f"Execution error: {e}")
             raise
 
-    # ---------- Convenience methods ----------
     def get_system_info(self):
         if not self.api and not self.connect():
             return None
@@ -283,7 +300,7 @@ class RemoteMikroTikManager:
         try:
             self.api.path('/ip/hotspot/user').update(
                 where={'name': username},
-                expires=expiry_datetime.strftime('%Y-%m-%d %M:%H:%S')  # adjust if needed
+                expires=expiry_datetime.strftime('%Y-%m-%d %M:%H:%S')
             )
             return True
         except TrapError as e:
@@ -300,11 +317,9 @@ class RemoteMikroTikManager:
             return None
 
     def get_full_metrics(self):
-        """Collect all metrics: system resource, active users, interface traffic."""
         if not self.api and not self.connect():
             return None
         metrics = {}
-        # System resource
         try:
             resource = self.api.path('/system/resource').get()[0]
             metrics['cpu_load'] = float(resource.get('cpu-load', 0))
@@ -314,24 +329,18 @@ class RemoteMikroTikManager:
         except Exception as e:
             logger.error(f"Resource error: {e}")
             return None
-        
-        # Active hotspot users
         try:
             active = self.api.path('/ip/hotspot/active').get()
             metrics['active_users'] = len(active)
         except Exception as e:
             logger.error(f"Hotspot active error: {e}")
             metrics['active_users'] = 0
-        
-        # Interface traffic – get first ethernet interface
         try:
-            # Try to get the first ethernet interface
             iface = self.api.path('/interface').select('name', 'rx-byte', 'tx-byte').where({'type': 'ether'}).first()
             if iface:
                 metrics['rx_byte'] = int(iface.get('rx-byte', 0))
                 metrics['tx_byte'] = int(iface.get('tx-byte', 0))
             else:
-                # Fallback to first interface
                 iface = self.api.path('/interface').select('name', 'rx-byte', 'tx-byte').first()
                 if iface:
                     metrics['rx_byte'] = int(iface.get('rx-byte', 0))
@@ -343,5 +352,41 @@ class RemoteMikroTikManager:
             logger.error(f"Traffic error: {e}")
             metrics['rx_byte'] = 0
             metrics['tx_byte'] = 0
-        
         return metrics
+
+    # ---- MAC support for remote manager ----
+    def update_user_mac(self, username, mac_address):
+        if not self.api and not self.connect():
+            return False
+        try:
+            self.api.path('/ip/hotspot/user').update(
+                where={'name': username},
+                mac_address=mac_address
+            )
+            logger.info(f"MAC {mac_address} set for user {username} on {self.config['host']}")
+            return True
+        except TrapError as e:
+            logger.error(f"Failed to set MAC for {username}: {e}")
+            return False
+
+    def ensure_hotspot_user_exists(self, username, password, profile='default', expires_at=None):
+        if not self.api and not self.connect():
+            return False
+        try:
+            users = self.api.path('/ip/hotspot/user').where({'name': username})
+            if not users:
+                self.create_hotspot_user(username, password, profile)
+                if expires_at:
+                    self.set_user_expiry(username, expires_at)
+                # activate via update
+                self.api.path('/ip/hotspot/user').update(where={'name': username}, disabled=False)
+                logger.info(f"Re‑created remote user {username}")
+            else:
+                self.api.path('/ip/hotspot/user').update(where={'name': username}, disabled=False)
+                if expires_at:
+                    self.set_user_expiry(username, expires_at)
+                logger.info(f"Remote user {username} already exists, activated")
+            return True
+        except TrapError as e:
+            logger.error(f"Error ensuring remote user {username}: {e}")
+            return False

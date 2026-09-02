@@ -99,6 +99,7 @@ class WifiSubscription(models.Model):
     package = models.ForeignKey(WifiPackage, on_delete=models.PROTECT)
     payment = models.OneToOneField(WifiPayment, on_delete=models.PROTECT, related_name='subscription')
     username = models.CharField(max_length=50, unique=True)
+    password = models.CharField(max_length=50, blank=True, null=True)  # <-- ADD THIS
     voucher_code = models.CharField(max_length=10, unique=True, blank=True, null=True)
     device_mac = models.CharField(max_length=17)
     started_at = models.DateTimeField(auto_now_add=True)

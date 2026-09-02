@@ -1723,3 +1723,116 @@ Payment initiated: 767612a7-dc48-4865-b4de-91f1e9bbe50d
 Watching for file changes with StatReloader
 /home/mac/whoweare/wifi/wifi_hotspot/wifi/views.py changed, reloading.
 Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/services/marz.py changed, reloading.
+Watching for file changes with StatReloader
+Port 8728 not reachable on 192.168.126.206
+Port 8728 not reachable on 192.168.126.206
+Port 8728 not reachable on 192.168.126.206
+Port 8728 not reachable on 192.168.126.206
+Port 8728 not reachable on 192.168.126.206
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Port 8728 not reachable on 192.168.126.206
+Port 8728 not reachable on 192.168.126.206
+/home/mac/whoweare/wifi/wifi_hotspot/wifi_hotspot/settings.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /wifi/admin/devices/
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/utils/deprecation.py", line 443, in __call__
+    response = self.process_response(request, response)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/sessions/middleware.py", line 60, in process_response
+    request.session.save()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/sessions/backends/db.py", line 123, in save
+    obj = self.create_model_instance(data)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/sessions/backends/db.py", line 102, in create_model_instance
+    session_data=self.encode(data),
+                 ~~~~~~~~~~~^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/sessions/backends/base.py", line 129, in encode
+    return signing.dumps(
+           ~~~~~~~~~~~~~^
+        session_dict,
+        ^^^^^^^^^^^^^
+    ...<2 lines>...
+        compress=True,
+        ^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/signing.py", line 190, in dumps
+    return TimestampSigner(key=key, salt=salt).sign_object(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        obj, serializer=serializer, compress=compress
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/signing.py", line 265, in sign_object
+    data = serializer().dumps(obj)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/signing.py", line 165, in dumps
+    return json.dumps(obj, separators=(",", ":")).encode("latin-1")
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/json/__init__.py", line 242, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/usr/lib/python3.14/json/encoder.py", line 202, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.14/json/encoder.py", line 263, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/lib/python3.14/json/encoder.py", line 182, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+                    f'is not JSON serializable')
+TypeError: Object of type datetime is not JSON serializable
+when serializing dict item 'admin_last_activity'
+Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/utils/deprecation.py", line 443, in __call__
+    response = self.process_response(request, response)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/sessions/middleware.py", line 60, in process_response
+    request.session.save()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/sessions/backends/db.py", line 123, in save
+    obj = self.create_model_instance(data)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/sessions/backends/db.py", line 102, in create_model_instance
+    session_data=self.encode(data),
+                 ~~~~~~~~~~~^^^^^^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/contrib/sessions/backends/base.py", line 129, in encode
+    return signing.dumps(
+           ~~~~~~~~~~~~~^
+        session_dict,
+        ^^^^^^^^^^^^^
+    ...<2 lines>...
+        compress=True,
+        ^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/signing.py", line 190, in dumps
+    return TimestampSigner(key=key, salt=salt).sign_object(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        obj, serializer=serializer, compress=compress
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/signing.py", line 265, in sign_object
+    data = serializer().dumps(obj)
+  File "/home/mac/whoweare/wifi/wifi_hotspot/venv/lib/python3.14/site-packages/django/core/signing.py", line 165, in dumps
+    return json.dumps(obj, separators=(",", ":")).encode("latin-1")
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/json/__init__.py", line 242, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/usr/lib/python3.14/json/encoder.py", line 202, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.14/json/encoder.py", line 263, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/lib/python3.14/json/encoder.py", line 182, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+                    f'is not JSON serializable')
+TypeError: Object of type datetime is not JSON serializable
+when serializing dict item 'admin_last_activity'
+/home/mac/whoweare/wifi/wifi_hotspot/wifi/middleware.py changed, reloading.
+Watching for file changes with StatReloader

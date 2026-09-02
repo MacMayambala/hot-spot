@@ -53,13 +53,23 @@ def get_or_create_device(request):
 
 def portal(request):
     device = get_or_create_device(request)
-    # Check if device already has active subscription
     sub = get_active_subscription_for_device(device.mac_address)
     if sub:
-        # Redirect to dashboard
+        # Ensure the hotspot user is active on the router
+        try:
+            # Try to activate – if it fails, recreate the user
+            from .services.mikrotik import activate_hotspot_user, create_hotspot_user, set_user_expiry, update_user_mac
+            if not activate_hotspot_user(sub.username):
+                # Recreate using stored password
+                create_hotspot_user(sub.username, sub.password, profile='default')
+                set_user_expiry(sub.username, sub.expires_at)
+                activate_hotspot_user(sub.username)
+                # Set MAC address for auto‑auth
+                update_user_mac(sub.username, device.mac_address)
+        except Exception as e:
+            logger.error(f"Auto-login failed for {sub.username}: {e}")
         return redirect('wifi:dashboard')
     return render(request, 'wifi/portal.html', {'device': device})
-
 def packages(request):
     device = get_or_create_device(request)
     packages = WifiPackage.objects.filter(is_active=True)
